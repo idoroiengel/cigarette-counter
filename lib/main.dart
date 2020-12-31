@@ -9,7 +9,7 @@ Future<void> main() async {
 
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-
+  // database.initWithMOckData();
   runApp(CigaretteCounterApp(database: database));
 }
 
