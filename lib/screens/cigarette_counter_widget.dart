@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_cigarette_counter/dao/cigarette_dao.dart';
+import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 
 class CigaretteCounterWidget extends StatefulWidget {
-  CigaretteDao cigaretteDao;
+  AppDatabase database;
 
-  CigaretteCounterWidget({this.cigaretteDao});
+  CigaretteCounterWidget({this.database});
 
   @override
   _CigaretteCounterWidgetState createState() => _CigaretteCounterWidgetState();
@@ -14,23 +14,40 @@ class CigaretteCounterWidget extends StatefulWidget {
 class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return ListView.separated(
-          itemBuilder: (context, index) {
-            return Text((snapshot.data as List<Cigarette>)[index].toString());
+    return Scaffold(
+      floatingActionButton: RaisedButton(
+        onPressed: () => widget.database.addCigarette(
+          Cigarette(
+            timeOfSmoke: DateTime.now(),
+            smokingContext: "adding a cigarette to test system",
+            reasonToSmoke: "test system",
+            chainSmokingNum: 1,
+          ),
+        ),
+        child: Text("smoke a cigarette"),
+      ),
+      body: Container(
+        child: StreamBuilder(
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return Text(
+                    (snapshot.data as List<Cigarette>)[index].toString());
+              },
+              separatorBuilder: (context, index) =>
+                  Divider(color: Colors.black),
+              itemCount: (snapshot.data as List<Cigarette>).length,
+            );
           },
-          separatorBuilder: (context, index) => Divider(color: Colors.black),
-          itemCount: (snapshot.data as List<Cigarette>).length,
-        );
-      },
-      stream: widget.cigaretteDao.getAllSmokedCigarettes().asStream(),
+          stream: widget.database.getAllSmokedCigarettes().asStream(),
+        ),
+      ),
     );
   }
 
   Cigarette showCigarette() {
     Cigarette returnValue;
-    widget.cigaretteDao
+    widget.database
         .getCigarette(2)
         .then((value) => {
               returnValue = value,
