@@ -1,10 +1,10 @@
 import 'package:floor/floor.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
-
+import 'package:my_cigarette_counter/type_converters/date_time_converter.dart';
 
 @dao
+@TypeConverters([DateTimeConverter])
 abstract class CigaretteDao {
-
   @insert
   Future<void> insertCigarette(Cigarette cigarette);
 
@@ -13,5 +13,6 @@ abstract class CigaretteDao {
 
   @Query("SELECT * FROM Cigarette")
   Future<List<Cigarette>> getAllSmokedCigarettes();
+
 
 }
