@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:cigarette_counter/dao/cigarette_dao.dart';
-import 'package:cigarette_counter/entity/cigarette.dart';
 import 'package:floor/floor.dart';
+import 'package:my_cigarette_counter/dao/cigarette_dao.dart';
+import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 part 'database.g.dart';

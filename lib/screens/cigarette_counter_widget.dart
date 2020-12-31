@@ -1,6 +1,6 @@
-import 'package:cigarette_counter/dao/cigarette_dao.dart';
-import 'package:cigarette_counter/entity/cigarette.dart';
 import 'package:flutter/material.dart';
+import 'package:my_cigarette_counter/dao/cigarette_dao.dart';
+import 'package:my_cigarette_counter/entity/cigarette.dart';
 
 class CigaretteCounterWidget extends StatefulWidget {
   CigaretteDao cigaretteDao;

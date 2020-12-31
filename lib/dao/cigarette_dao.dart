@@ -1,5 +1,5 @@
-import 'package:cigarette_counter/entity/cigarette.dart';
 import 'package:floor/floor.dart';
+import 'package:my_cigarette_counter/entity/cigarette.dart';
 
 
 @dao
