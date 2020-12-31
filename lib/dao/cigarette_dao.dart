@@ -14,5 +14,6 @@ abstract class CigaretteDao {
   @Query("SELECT * FROM Cigarette")
   Future<List<Cigarette>> getAllSmokedCigarettes();
 
-
+  @Query("SELECT * FROM Cigarette WHERE timeOfSmoke BETWEEN :startDate AND :endDate")
+  Future<List<Cigarette>> getAllSmokedCigarettesFromTo(int startDate, int endDate);
 }
