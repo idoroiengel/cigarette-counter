@@ -8,19 +8,15 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final database =
-  await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  database.test();
-  final cigaretteDao = database.cigaretteDao;
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
 
-  runApp(CigaretteCounterApp(
-    cigaretteDao: cigaretteDao,
-  ));
+  runApp(CigaretteCounterApp(database: database));
 }
 
 class CigaretteCounterApp extends StatelessWidget {
-  const CigaretteCounterApp({this.cigaretteDao});
+  const CigaretteCounterApp({this.database});
 
-  final CigaretteDao cigaretteDao;
+  final AppDatabase database;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +27,7 @@ class CigaretteCounterApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: CigaretteCounterWidget(
-        cigaretteDao: cigaretteDao,
+        database: database,
       ),
     );
   }
