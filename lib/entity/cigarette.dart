@@ -10,12 +10,13 @@ class Cigarette {
    // maybe make this an enum, as there are only a number of contexts one can smoke
    String smokingContext;
    int chainSmokingNum;
+   DateTime timeOfSmoke;
 
   Cigarette(
-  {this.id, this.reasonToSmoke, this.smokingContext, this.chainSmokingNum});
+  {this.id, this.reasonToSmoke, this.smokingContext, this.chainSmokingNum, this.timeOfSmoke});
 
   @override
   String toString() {
-    return 'Cigarette{id: $id, reasonToSmoke: $reasonToSmoke, smokingContext: $smokingContext, chainSmokingNum: $chainSmokingNum}';
+    return 'Cigarette{id: $id, reasonToSmoke: $reasonToSmoke, smokingContext: $smokingContext, chainSmokingNum: $chainSmokingNum, timeOfSmoke: $timeOfSmoke}';
   }
 }
