@@ -1,6 +1,6 @@
 on: push
 
-name: Sample Workflow
+name: Flutter analyzer
 
 jobs:
   build:
