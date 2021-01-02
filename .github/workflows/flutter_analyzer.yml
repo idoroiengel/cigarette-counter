@@ -12,9 +12,8 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
       - run: flutter pub get
-        
-      - name: generate floor
+      - name: generate floor          
+        uses: subosito/flutter-action@v1
       - run: flutter packages pub run build_runner build
-  
       - name: Analyze Flutter
         uses: zgosalvez/github-actions-analyze-flutter@v1
