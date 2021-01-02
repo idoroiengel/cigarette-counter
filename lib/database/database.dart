@@ -63,9 +63,9 @@ abstract class AppDatabase extends FloorDatabase {
     return _cigaretteDao.getAllSmokedCigarettesFromTo(from, to);
   }
 
-  Future<void> initDatabase() async {
-    final database =
-        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-    final cigaretteDao = database._cigaretteDao;
-  }
+  // Future<void> initDatabase() async {
+  //   final database =
+  //       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  //   final cigaretteDao = database._cigaretteDao;
+  // }
 }

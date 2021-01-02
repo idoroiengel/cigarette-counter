@@ -139,7 +139,5 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
                       .millisecondsSinceEpoch)
               .asStream());
     });
-    ;
-    ;
   }
 }
