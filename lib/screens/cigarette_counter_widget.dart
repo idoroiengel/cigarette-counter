@@ -37,8 +37,9 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
             ),
             ListTile(
               title: Text(
-                "second tile",
+                "yesterday",
               ),
+              onTap: showYesterday,
             ),
           ],
         ),
@@ -78,12 +79,12 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
     activeView = StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return ListView.separated(
+          itemCount: (snapshot.data as List<Cigarette>).length,
           itemBuilder: (context, index) {
             return Text((snapshot.data as List<Cigarette>)[index].toString());
           },
           separatorBuilder: (context, index) => Divider(color: Colors.black),
           // itemCount: 2,
-          itemCount: (snapshot.data as List<Cigarette>).length,
         );
       },
       stream: widget.database.getAllSmokedCigarettes().asStream(),
@@ -106,9 +107,39 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
           },
           stream: widget.database
               .getAllSmokedCigarettesFromTo(
-                  Jiffy().startOf(Units.DAY).microsecondsSinceEpoch,
-                  Jiffy().endOf(Units.DAY).microsecondsSinceEpoch)
+                  Jiffy().startOf(Units.DAY).millisecondsSinceEpoch,
+                  Jiffy().endOf(Units.DAY).millisecondsSinceEpoch)
               .asStream());
     });
+  }
+
+  void showYesterday() {
+    setState(() {
+      activeView = StreamBuilder(
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return Text(
+                    (snapshot.data as List<Cigarette>)[index].toString());
+              },
+              separatorBuilder: (context, index) =>
+                  Divider(color: Colors.black),
+              itemCount: (snapshot.data as List<Cigarette>).length,
+            );
+          },
+          stream: widget.database
+              .getAllSmokedCigarettesFromTo(
+                  Jiffy()
+                      .startOf(Units.DAY)
+                      .subtract(Duration(days: 1))
+                      .millisecondsSinceEpoch,
+                  Jiffy()
+                      .endOf(Units.DAY)
+                      .subtract(Duration(days: 1))
+                      .millisecondsSinceEpoch)
+              .asStream());
+    });
+    ;
+    ;
   }
 }

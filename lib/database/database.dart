@@ -14,44 +14,37 @@ part 'database.g.dart';
 abstract class AppDatabase extends FloorDatabase {
   CigaretteDao get _cigaretteDao;
 
-
-  void initWithMOckData(){
-    _cigaretteDao.insertCigarette(Cigarette(
-      chainSmokingNum: 1,
-      reasonToSmoke: "I felt like it",
-      smokingContext: "testing",
-      timeOfSmoke: Jiffy().startOf(Units.MONTH)
-    ));
+  void initWithMOckData() {
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
         smokingContext: "testing",
-        timeOfSmoke: Jiffy().endOf(Units.MONTH)
-    ));
+        timeOfSmoke: Jiffy().startOf(Units.MONTH)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
         smokingContext: "testing",
-        timeOfSmoke: Jiffy().startOf(Units.WEEK)
-    ));
+        timeOfSmoke: Jiffy().endOf(Units.MONTH)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
         smokingContext: "testing",
-        timeOfSmoke: Jiffy().endOf(Units.WEEK)
-    ));
+        timeOfSmoke: Jiffy().startOf(Units.WEEK)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
         smokingContext: "testing",
-        timeOfSmoke: Jiffy().startOf(Units.DAY)
-    ));
+        timeOfSmoke: Jiffy().endOf(Units.WEEK)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
         smokingContext: "testing",
-        timeOfSmoke: Jiffy().endOf(Units.DAY)
-    ));
+        timeOfSmoke: Jiffy().startOf(Units.DAY)));
+    _cigaretteDao.insertCigarette(Cigarette(
+        chainSmokingNum: 1,
+        reasonToSmoke: "I felt like it",
+        smokingContext: "testing",
+        timeOfSmoke: Jiffy().endOf(Units.DAY)));
   }
 
   Future<void> addCigarette(Cigarette cigarette) async {
@@ -66,7 +59,7 @@ abstract class AppDatabase extends FloorDatabase {
     return _cigaretteDao.getCigarette(id);
   }
 
-  Future<List<Cigarette>> getAllSmokedCigarettesFromTo(int from, int to){
+  Future<List<Cigarette>> getAllSmokedCigarettesFromTo(int from, int to) {
     return _cigaretteDao.getAllSmokedCigarettesFromTo(from, to);
   }
 
