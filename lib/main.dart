@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_cigarette_counter/routes.dart';
 
 import 'database/database.dart';
 import 'screens/cigarette_counter_widget.dart';
@@ -28,6 +29,7 @@ class CigaretteCounterApp extends StatelessWidget {
       home: CigaretteCounterWidget(
         database: database,
       ),
+      routes: Routes.getRoutes(database)
     );
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
+import 'package:my_cigarette_counter/routes.dart';
+import 'package:my_cigarette_counter/components/smoking_counter_drawer_widget.dart';
 
 class CigaretteCounterWidget extends StatefulWidget {
   AppDatabase database;
@@ -21,34 +22,10 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
       appBar: AppBar(
         title: Text("Cigarette counter"),
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              child: Text(
-                "statistics",
-              ),
-            ),
-            ListTile(
-              title: Text(
-                "today",
-              ),
-              onTap: showToday,
-            ),
-            ListTile(
-              title: Text(
-                "yesterday",
-              ),
-              onTap: showYesterday,
-            ),
-            ListTile(
-              title: Text(
-                "smoking context",
-              ),
-              onTap: smokingContext,
-            ),
-          ],
-        ),
+      drawer: SmokingCounterDrawerWidget(
+        onSmokingContextTapped: smokingContext,
+        onTodayTapped: showToday,
+        onYesterdayTapped: showYesterday,
       ),
       floatingActionButton: RaisedButton(
         onPressed: () => widget.database.addCigarette(
@@ -104,46 +81,17 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
   }
 
   void showToday() {
-    setState(() {
-      activeView = StreamBuilder(
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return ListView.separated(
-              itemCount: (snapshot.data as List<Cigarette>).length,
-              itemBuilder: (context, index) {
-                return Text(
-                    (snapshot.data as List<Cigarette>)[index].toString());
-              },
-              separatorBuilder: (context, index) =>
-                  Divider(color: Colors.black),
-            );
-          },
-          stream: widget.database
-              .getAllSmokedCigarettesFromTo(
-                  Jiffy().startOf(Units.DAY), Jiffy().endOf(Units.DAY))
-              .asStream());
-    });
+    Navigator.pushNamed(
+      context,
+      Routes.Today_Statistics,
+    );
   }
 
   void showYesterday() {
-    setState(() {
-      activeView = StreamBuilder(
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return ListView.separated(
-              itemCount: (snapshot.data as List<Cigarette>).length,
-              itemBuilder: (context, index) {
-                return Text(
-                    (snapshot.data as List<Cigarette>)[index].toString());
-              },
-              separatorBuilder: (context, index) =>
-                  Divider(color: Colors.black),
-            );
-          },
-          stream: widget.database
-              .getAllSmokedCigarettesFromTo(
-                  Jiffy().startOf(Units.DAY).subtract(Duration(days: 1)),
-                  Jiffy().endOf(Units.DAY).subtract(Duration(days: 1)))
-              .asStream());
-    });
+    Navigator.pushNamed(
+      context,
+      Routes.Yesterday_Statistics,
+    );
   }
 
   void smokingContext() {
