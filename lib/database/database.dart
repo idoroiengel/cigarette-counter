@@ -17,43 +17,43 @@ abstract class AppDatabase extends FloorDatabase {
   void initWithMockData() {
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "start of month",
+        reasonToSmoke: "my girlfriend broke up with me",
+        smokingContext: "In the street",
         timeOfSmoke: Jiffy().startOf(Units.MONTH)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "end of month",
+        reasonToSmoke: "I was happy!",
+        smokingContext: "First thing in the morning",
         timeOfSmoke: Jiffy().endOf(Units.MONTH)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "start of week",
+        reasonToSmoke: "I got a promotion",
+        smokingContext: "At work",
         timeOfSmoke: Jiffy().startOf(Units.WEEK)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "end of week",
+        reasonToSmoke: "I needed some time off",
+        smokingContext: "in the balcony",
         timeOfSmoke: Jiffy().endOf(Units.WEEK)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "start of day",
+        reasonToSmoke: "My parents upsetting me",
+        smokingContext: "At my folks\'",
         timeOfSmoke: Jiffy().startOf(Units.DAY)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "end of day",
+        reasonToSmoke: "With the coffee",
+        smokingContext: "early morning",
         timeOfSmoke: Jiffy().endOf(Units.DAY)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "start of hour",
+        reasonToSmoke: "I had to get up early",
+        smokingContext: "the bus station",
         timeOfSmoke: Jiffy().startOf(Units.HOUR)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
-        reasonToSmoke: "I felt like it",
-        smokingContext: "end of hour",
+        reasonToSmoke: "After dinner",
+        smokingContext: "in the balcony",
         timeOfSmoke: Jiffy().endOf(Units.HOUR)));
   }
 
