@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'dao/cigarette_dao.dart';
 import 'database/database.dart';
 import 'screens/cigarette_counter_widget.dart';
 
@@ -9,7 +8,7 @@ Future<void> main() async {
 
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  // database.initWithMOckData();
+  // database.initWithMockData();
   runApp(CigaretteCounterApp(database: database));
 }
 

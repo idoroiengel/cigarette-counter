@@ -41,6 +41,12 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
               ),
               onTap: showYesterday,
             ),
+            ListTile(
+              title: Text(
+                "smoking context",
+              ),
+              onTap: smokingContext,
+            ),
           ],
         ),
       ),
@@ -77,17 +83,23 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
   void initState() {
     super.initState();
     activeView = StreamBuilder(
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return ListView.separated(
-          itemCount: (snapshot.data as List<Cigarette>).length,
-          itemBuilder: (context, index) {
-            return Text((snapshot.data as List<Cigarette>)[index].toString());
-          },
-          separatorBuilder: (context, index) => Divider(color: Colors.black),
-          // itemCount: 2,
-        );
-      },
       stream: widget.database.getAllSmokedCigarettes().asStream(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        }
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        } else {
+          return ListView.separated(
+            itemCount: (snapshot.data as List<Cigarette>).length,
+            itemBuilder: (context, index) {
+              return Text((snapshot.data as List<Cigarette>)[index].toString());
+            },
+            separatorBuilder: (context, index) => Divider(color: Colors.black),
+          );
+        }
+      },
     );
   }
 
@@ -96,19 +108,18 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
       activeView = StreamBuilder(
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             return ListView.separated(
+              itemCount: (snapshot.data as List<Cigarette>).length,
               itemBuilder: (context, index) {
                 return Text(
                     (snapshot.data as List<Cigarette>)[index].toString());
               },
               separatorBuilder: (context, index) =>
                   Divider(color: Colors.black),
-              itemCount: (snapshot.data as List<Cigarette>).length,
             );
           },
           stream: widget.database
               .getAllSmokedCigarettesFromTo(
-                  Jiffy().startOf(Units.DAY).millisecondsSinceEpoch,
-                  Jiffy().endOf(Units.DAY).millisecondsSinceEpoch)
+                  Jiffy().startOf(Units.DAY), Jiffy().endOf(Units.DAY))
               .asStream());
     });
   }
@@ -118,25 +129,39 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
       activeView = StreamBuilder(
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             return ListView.separated(
+              itemCount: (snapshot.data as List<Cigarette>).length,
               itemBuilder: (context, index) {
                 return Text(
                     (snapshot.data as List<Cigarette>)[index].toString());
               },
               separatorBuilder: (context, index) =>
                   Divider(color: Colors.black),
-              itemCount: (snapshot.data as List<Cigarette>).length,
             );
           },
           stream: widget.database
               .getAllSmokedCigarettesFromTo(
-                  Jiffy()
-                      .startOf(Units.DAY)
-                      .subtract(Duration(days: 1))
-                      .millisecondsSinceEpoch,
-                  Jiffy()
-                      .endOf(Units.DAY)
-                      .subtract(Duration(days: 1))
-                      .millisecondsSinceEpoch)
+                  Jiffy().startOf(Units.DAY).subtract(Duration(days: 1)),
+                  Jiffy().endOf(Units.DAY).subtract(Duration(days: 1)))
+              .asStream());
+    });
+  }
+
+  void smokingContext() {
+    setState(() {
+      activeView = StreamBuilder(
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return ListView.separated(
+              itemCount: (snapshot.data as List<Cigarette>).length,
+              itemBuilder: (context, index) {
+                return Text(
+                    (snapshot.data as List<Cigarette>)[index].toString());
+              },
+              separatorBuilder: (context, index) =>
+                  Divider(color: Colors.black),
+            );
+          },
+          stream: widget.database
+              .getAllSmokedCigarettesInContext("start of day")
               .asStream());
     });
   }

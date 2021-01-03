@@ -14,37 +14,47 @@ part 'database.g.dart';
 abstract class AppDatabase extends FloorDatabase {
   CigaretteDao get _cigaretteDao;
 
-  void initWithMOckData() {
+  void initWithMockData() {
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
-        smokingContext: "testing",
+        smokingContext: "start of month",
         timeOfSmoke: Jiffy().startOf(Units.MONTH)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
-        smokingContext: "testing",
+        smokingContext: "end of month",
         timeOfSmoke: Jiffy().endOf(Units.MONTH)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
-        smokingContext: "testing",
+        smokingContext: "start of week",
         timeOfSmoke: Jiffy().startOf(Units.WEEK)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
-        smokingContext: "testing",
+        smokingContext: "end of week",
         timeOfSmoke: Jiffy().endOf(Units.WEEK)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
-        smokingContext: "testing",
+        smokingContext: "start of day",
         timeOfSmoke: Jiffy().startOf(Units.DAY)));
     _cigaretteDao.insertCigarette(Cigarette(
         chainSmokingNum: 1,
         reasonToSmoke: "I felt like it",
-        smokingContext: "testing",
+        smokingContext: "end of day",
         timeOfSmoke: Jiffy().endOf(Units.DAY)));
+    _cigaretteDao.insertCigarette(Cigarette(
+        chainSmokingNum: 1,
+        reasonToSmoke: "I felt like it",
+        smokingContext: "start of hour",
+        timeOfSmoke: Jiffy().startOf(Units.HOUR)));
+    _cigaretteDao.insertCigarette(Cigarette(
+        chainSmokingNum: 1,
+        reasonToSmoke: "I felt like it",
+        smokingContext: "end of hour",
+        timeOfSmoke: Jiffy().endOf(Units.HOUR)));
   }
 
   Future<void> addCigarette(Cigarette cigarette) async {
@@ -59,13 +69,13 @@ abstract class AppDatabase extends FloorDatabase {
     return _cigaretteDao.getCigarette(id);
   }
 
-  Future<List<Cigarette>> getAllSmokedCigarettesFromTo(int from, int to) {
+  Future<List<Cigarette>> getAllSmokedCigarettesFromTo(
+      DateTime from, DateTime to) {
     return _cigaretteDao.getAllSmokedCigarettesFromTo(from, to);
   }
 
-  // Future<void> initDatabase() async {
-  //   final database =
-  //       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  //   final cigaretteDao = database._cigaretteDao;
-  // }
+  Future<List<Cigarette>> getAllSmokedCigarettesInContext(
+      String smokingContext) {
+    return _cigaretteDao.getAlSmokedCigarettesInContext(smokingContext);
+  }
 }
