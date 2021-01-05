@@ -18,9 +18,9 @@ class Routes {
             status: SmokingStatisticsStatus.TODAY,
           ),
       Routes.Yesterday_Statistics: (context) => SmokingStatisticsWidget(
-        database: database,
-        status: SmokingStatisticsStatus.YESTERDAY,
-      ),
+            database: database,
+            status: SmokingStatisticsStatus.YESTERDAY,
+          ),
     };
   }
 }

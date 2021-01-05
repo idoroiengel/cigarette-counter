@@ -21,15 +21,14 @@ class CigaretteCounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cigarette Counter App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: CigaretteCounterWidget(
-        database: database,
-      ),
-      routes: Routes.getRoutes(database)
-    );
+        title: 'Cigarette Counter App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: CigaretteCounterWidget(
+          database: database,
+        ),
+        routes: Routes.getRoutes(database));
   }
 }
