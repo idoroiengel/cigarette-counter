@@ -135,64 +135,64 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
       },
     );
   }
-}
 
-TableRow titleRow() {
-  return TableRow(
-    children: [
-      Container(
-        child: Text(
-          "time of smoke",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+  TableRow titleRow() {
+    return TableRow(
+      children: [
+        Container(
+          child: Text(
+            "time of smoke",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      Container(
-        child: Text(
-          "smoking context",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        Container(
+          child: Text(
+            "smoking context",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      Container(
-        child: Text(
-          "reason to smoke",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        Container(
+          child: Text(
+            "reason to smoke",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      Container(
-        child: Text(
-          "id",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        Container(
+          child: Text(
+            "id",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      )
-    ],
-  );
-}
-
-List<TableRow> populateTable(AsyncSnapshot snapshot) {
-  Jiffy jiffy = new Jiffy(DateTime.now(), "yyyy-MM-dd");
-  var list = List<TableRow>();
-  list.add(titleRow());
-  (snapshot.data as List<Cigarette>).forEach((element) {
-    list.add(
-      new TableRow(
-        children: [
-          Text(jiffy.from(element.timeOfSmoke)),
-          Text(element.smokingContext),
-          Text(element.reasonToSmoke),
-          Text(element.id.toString())
-        ],
-      ),
+        )
+      ],
     );
-  });
-  return list;
+  }
+
+  List<TableRow> populateTable(AsyncSnapshot snapshot) {
+    Jiffy jiffy = new Jiffy(DateTime.now(), "yyyy-MM-dd");
+    var list = List<TableRow>();
+    list.add(titleRow());
+    (snapshot.data as List<Cigarette>).forEach((element) {
+      list.add(
+        new TableRow(
+          children: [
+            Text(jiffy.from(element.timeOfSmoke)),
+            Text(element.smokingContext),
+            Text(element.reasonToSmoke),
+            Text(element.id.toString())
+          ],
+        ),
+      );
+    });
+    return list;
+  }
 }
 
 enum SmokingStatisticsStatus {
