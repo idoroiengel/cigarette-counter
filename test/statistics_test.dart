@@ -38,7 +38,7 @@ void main() {
     }, tags: "statistics");
 
     test(
-        "create two cigarettes smoked yesterday, and one smoked today, and verify "
+        "create two cigarettes smoked yesterday, and one smoked before, and verify "
         "that database returns correctly those smoked yesterday, as passed by parameters",
         () async {
       var jiffy = new Jiffy();
@@ -59,5 +59,55 @@ void main() {
 
       expect(list.length, equals(2));
     }, tags: "statistics");
+
+    test(
+        "create two cigarettes smoked during this week, and one smoked before, and verify "
+        "that database returns correctly those smoked this week, as passed by parameters",
+        () async {
+      var jiffy = new Jiffy();
+      var startOfWeek = jiffy.startOf(Units.WEEK);
+      var endOfWeek = jiffy.endOf(Units.WEEK);
+
+      Cigarette cigarette1 = new Cigarette(timeOfSmoke: startOfWeek);
+      Cigarette cigarette2 = new Cigarette(timeOfSmoke: endOfWeek);
+      Cigarette cigarette3 =
+          new Cigarette(timeOfSmoke: jiffy.startOf(Units.YEAR));
+      database.addCigarette(cigarette1);
+      database.addCigarette(cigarette2);
+      database.addCigarette(cigarette3);
+
+      final list =
+          await database.getAllSmokedCigarettesFromTo(startOfWeek, endOfWeek);
+
+      expect(list.length, equals(2));
+    });
+
+    test(
+        "create two cigarettes smoked during this month, and one smoked before, and verify "
+        "that database returns correctly those smoked this week, as passed by parameters",
+        () async {
+      var jiffy = new Jiffy();
+      var startOfMonth = jiffy.startOf(Units.MONTH);
+      var endOfMonth = jiffy.endOf(Units.MONTH);
+
+      Cigarette cigarette1 = new Cigarette(timeOfSmoke: startOfMonth);
+      Cigarette cigarette2 = new Cigarette(timeOfSmoke: endOfMonth);
+      Cigarette cigarette3;
+      if (jiffy
+          .startOf(Units.MONTH)
+          .isAtSameMomentAs(jiffy.startOf(Units.YEAR))) {
+        cigarette3 = new Cigarette(
+            timeOfSmoke: jiffy.startOf(Units.YEAR).subtract(Duration(days: 1)));
+      } else {
+        cigarette3 = new Cigarette(timeOfSmoke: jiffy.startOf(Units.YEAR));
+      }
+      database.addCigarette(cigarette1);
+      database.addCigarette(cigarette2);
+      database.addCigarette(cigarette3);
+
+      final list =
+          await database.getAllSmokedCigarettesFromTo(startOfMonth, endOfMonth);
+      expect(list.length, equals(2));
+    });
   });
 }

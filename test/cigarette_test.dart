@@ -14,7 +14,9 @@ void main() {
       await database.close();
     });
 
-    test("Create a cigarette object, and insert into db, and verify we get an id back", () async {
+    test(
+        "Create a cigarette object, and insert into db, and verify we get an id back",
+        () async {
       Cigarette cigarette = new Cigarette(
           chainSmokingNum: 1,
           smokingContext: "smoking context",
@@ -47,5 +49,11 @@ void main() {
 
       expect(assumption, true);
     }, tags: "cigarette");
+
+    test("Verify that getAllSmokedCigarettes returns an empty list when no cigarettes were added to it", () async {
+      final List<Cigarette> list = await database.getAllSmokedCigarettes();
+
+      expect(list.length, equals(0));
+    });
   });
 }
