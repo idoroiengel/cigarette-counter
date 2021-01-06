@@ -80,7 +80,7 @@ void main() {
           await database.getAllSmokedCigarettesFromTo(startOfWeek, endOfWeek);
 
       expect(list.length, equals(2));
-    });
+    }, tags: "statistics");
 
     test(
         "create two cigarettes smoked during this month, and one smoked before, and verify "
@@ -108,6 +108,6 @@ void main() {
       final list =
           await database.getAllSmokedCigarettesFromTo(startOfMonth, endOfMonth);
       expect(list.length, equals(2));
-    });
+    }, tags: "statistics");
   });
 }
