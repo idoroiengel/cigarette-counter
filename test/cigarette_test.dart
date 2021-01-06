@@ -24,6 +24,6 @@ void main() {
       bool assumption = newlyCreatedId > 0;
 
       expect(assumption, true);
-    });
+    }, tags: "cigarette");
   });
 }
