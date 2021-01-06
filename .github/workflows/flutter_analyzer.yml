@@ -23,6 +23,7 @@ jobs:
       - name: Test system
         run: flutter test
   merge-branch:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: action/checkout@master
