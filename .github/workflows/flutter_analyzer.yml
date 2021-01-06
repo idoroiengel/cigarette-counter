@@ -1,20 +1,21 @@
-on: push
-
 name: Flutter analyzer
+on: [push]
 
 jobs:
   build:
-    name: Example
+    name: Flutter build
     runs-on: ubuntu-latest
     steps:
-      
       - name: Checkout code
         uses: actions/checkout@v2
+      
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
       - run: flutter pub get
+        
       - name: Generate Floor dependency          
         uses: subosito/flutter-action@v1
       - run: flutter packages pub run build_runner build
+        
       - name: Analyze Flutter
         uses: zgosalvez/github-actions-analyze-flutter@v1
