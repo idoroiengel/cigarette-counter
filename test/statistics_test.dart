@@ -20,11 +20,11 @@ void main() {
         "that database returns correctly those smoked today, as passed by parameters",
         () async {
       var jiffy = new Jiffy();
-      var startOfDay = jiffy.startOf(Units.DAY);
-      var endOfDay = jiffy.endOf(Units.DAY);
+      var startOfToday = jiffy.startOf(Units.DAY);
+      var endOfToday = jiffy.endOf(Units.DAY);
 
-      Cigarette cigarette1 = new Cigarette(timeOfSmoke: startOfDay);
-      Cigarette cigarette2 = new Cigarette(timeOfSmoke: endOfDay);
+      Cigarette cigarette1 = new Cigarette(timeOfSmoke: startOfToday);
+      Cigarette cigarette2 = new Cigarette(timeOfSmoke: endOfToday);
       Cigarette cigarette3 =
           new Cigarette(timeOfSmoke: jiffy.startOf(Units.YEAR));
       database.addCigarette(cigarette1);
@@ -32,7 +32,7 @@ void main() {
       database.addCigarette(cigarette3);
 
       final list =
-          await database.getAllSmokedCigarettesFromTo(startOfDay, endOfDay);
+          await database.getAllSmokedCigarettesFromTo(startOfToday, endOfToday);
 
       expect(list.length, equals(2));
     }, tags: "statistics");

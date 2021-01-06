@@ -15,46 +15,19 @@ abstract class AppDatabase extends FloorDatabase {
   CigaretteDao get _cigaretteDao;
 
   void initWithMockData() {
-    _cigaretteDao.insertCigarette(Cigarette(
+    var jiffy = new Jiffy();
+    var cigarette1 = new Cigarette(
+        timeOfSmoke: jiffy.startOf(Units.DAY),
         chainSmokingNum: 1,
-        reasonToSmoke: "my girlfriend broke up with me",
-        smokingContext: "In the street",
-        timeOfSmoke: Jiffy().startOf(Units.MONTH)));
-    _cigaretteDao.insertCigarette(Cigarette(
+        smokingContext: "smoking context",
+        reasonToSmoke: "no reason at all");
+    var cigarette2 = new Cigarette(
+        timeOfSmoke: jiffy.startOf(Units.DAY),
         chainSmokingNum: 1,
-        reasonToSmoke: "I was happy!",
-        smokingContext: "First thing in the morning",
-        timeOfSmoke: Jiffy().endOf(Units.MONTH)));
-    _cigaretteDao.insertCigarette(Cigarette(
-        chainSmokingNum: 1,
-        reasonToSmoke: "I got a promotion",
-        smokingContext: "At work",
-        timeOfSmoke: Jiffy().startOf(Units.WEEK)));
-    _cigaretteDao.insertCigarette(Cigarette(
-        chainSmokingNum: 1,
-        reasonToSmoke: "I needed some time off",
-        smokingContext: "in the balcony",
-        timeOfSmoke: Jiffy().endOf(Units.WEEK)));
-    _cigaretteDao.insertCigarette(Cigarette(
-        chainSmokingNum: 1,
-        reasonToSmoke: "My parents upsetting me",
-        smokingContext: "At my folks\'",
-        timeOfSmoke: Jiffy().startOf(Units.DAY)));
-    _cigaretteDao.insertCigarette(Cigarette(
-        chainSmokingNum: 1,
-        reasonToSmoke: "With the coffee",
-        smokingContext: "early morning",
-        timeOfSmoke: Jiffy().endOf(Units.DAY)));
-    _cigaretteDao.insertCigarette(Cigarette(
-        chainSmokingNum: 1,
-        reasonToSmoke: "I had to get up early",
-        smokingContext: "the bus station",
-        timeOfSmoke: Jiffy().startOf(Units.HOUR)));
-    _cigaretteDao.insertCigarette(Cigarette(
-        chainSmokingNum: 1,
-        reasonToSmoke: "After dinner",
-        smokingContext: "in the balcony",
-        timeOfSmoke: Jiffy().endOf(Units.HOUR)));
+        smokingContext: "smoking context",
+        reasonToSmoke: "reason to smoke");
+    addCigarette(cigarette1);
+    addCigarette(cigarette2);
   }
 
   Future<int> addCigarette(Cigarette cigarette) async {

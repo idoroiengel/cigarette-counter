@@ -71,6 +71,7 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
   }
 
   StreamBuilder<List<Cigarette>> yesterdayStream() {
+    var jiffy = new Jiffy();
     return StreamBuilder(
       initialData: [
         Cigarette(
@@ -81,9 +82,8 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
       ],
       stream: widget.database
           .getAllSmokedCigarettesFromTo(
-            Jiffy().startOf(Units.DAY).subtract(Duration(days: 1)),
-            Jiffy().endOf(Units.DAY).subtract(Duration(days: 1)),
-          )
+              jiffy.startOf(Units.DAY).subtract(Duration(days: 1)),
+              jiffy.endOf(Units.DAY).subtract(Duration(days: 1)))
           .asStream(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
@@ -105,6 +105,7 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
   }
 
   StreamBuilder<List<Cigarette>> todayStream() {
+    var jiffy = new Jiffy();
     return StreamBuilder(
       initialData: [
         Cigarette(
@@ -115,7 +116,7 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
       ],
       stream: widget.database
           .getAllSmokedCigarettesFromTo(
-              Jiffy().startOf(Units.DAY), Jiffy().endOf(Units.DAY))
+              jiffy.startOf(Units.DAY), jiffy.endOf(Units.DAY))
           .asStream(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {

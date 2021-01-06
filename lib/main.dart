@@ -8,7 +8,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  // database.initWithMockData();
+  database.initWithMockData();
   runApp(CigaretteCounterApp(database: database));
 }
 
