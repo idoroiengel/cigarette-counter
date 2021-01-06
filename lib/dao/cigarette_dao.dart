@@ -6,7 +6,7 @@ import 'package:my_cigarette_counter/type_converters/date_time_converter.dart';
 @TypeConverters([DateTimeConverter])
 abstract class CigaretteDao {
   @insert
-  Future<void> insertCigarette(Cigarette cigarette);
+  Future<int> insertCigarette(Cigarette cigarette);
 
   @Query("SELECT * FROM Cigarette WHERE id= :id")
   Future<Cigarette> getCigarette(int id);

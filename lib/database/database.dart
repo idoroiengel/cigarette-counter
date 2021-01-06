@@ -57,7 +57,7 @@ abstract class AppDatabase extends FloorDatabase {
         timeOfSmoke: Jiffy().endOf(Units.HOUR)));
   }
 
-  Future<void> addCigarette(Cigarette cigarette) async {
+  Future<int> addCigarette(Cigarette cigarette) async {
     return _cigaretteDao.insertCigarette(cigarette);
   }
 
