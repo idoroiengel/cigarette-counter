@@ -42,20 +42,6 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
     );
   }
 
-  Cigarette showCigarette() {
-    Cigarette returnValue;
-    widget.database
-        .getCigarette(2)
-        .then((value) => {
-              returnValue = value,
-              print(value.reasonToSmoke),
-            })
-        .catchError((error) => {
-              print("no cigarettes yet!"),
-            });
-    return returnValue;
-  }
-
   @override
   void initState() {
     super.initState();
