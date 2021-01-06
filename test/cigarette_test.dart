@@ -50,7 +50,9 @@ void main() {
       expect(assumption, true);
     }, tags: "cigarette");
 
-    test("Verify that getAllSmokedCigarettes returns an empty list when no cigarettes were added to it", () async {
+    test(
+        "Verify that getAllSmokedCigarettes returns an empty list when no cigarettes were added to it",
+        () async {
       final List<Cigarette> list = await database.getAllSmokedCigarettes();
 
       expect(list.length, equals(0));
