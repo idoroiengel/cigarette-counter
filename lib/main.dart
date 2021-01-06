@@ -6,7 +6,6 @@ import 'screens/cigarette_counter_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   // database.initWithMockData();
