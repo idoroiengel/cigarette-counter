@@ -19,3 +19,6 @@ jobs:
         
       - name: Analyze Flutter
         uses: zgosalvez/github-actions-analyze-flutter@v1
+
+      - name: Test system
+        run: flutter test
