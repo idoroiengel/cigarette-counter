@@ -4,7 +4,7 @@ import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 
 void main() {
-  group("statistics tests", () {
+  group("statistics tests - timeOfSmoke tests", () {
     AppDatabase database;
 
     setUp(() async {
@@ -109,5 +109,37 @@ void main() {
           await database.getAllSmokedCigarettesFromTo(startOfMonth, endOfMonth);
       expect(list.length, equals(2));
     }, tags: "statistics");
+  });
+
+  group("statistics tests - smoking context tests", () {
+    AppDatabase database;
+    final smokingContext = "This is a const final context";
+    setUp(() async {
+      database = await $FloorAppDatabase.inMemoryDatabaseBuilder().build();
+    });
+
+    tearDown(() async {
+      await database.close();
+    });
+
+    test(
+        "create three cigarettes, two of which has identical context, "
+        "and check that they are retrieved when correct parameter is called to the method",
+        () async {
+      var cigarette1 = new Cigarette(smokingContext: smokingContext);
+      var cigarette2 = new Cigarette(smokingContext: smokingContext);
+      var cigarette3 =
+          new Cigarette(smokingContext: "I am a different context");
+
+      database
+        ..addCigarette(cigarette1)
+        ..addCigarette(cigarette2)
+        ..addCigarette(cigarette3);
+
+      final list =
+          await database.getAllSmokedCigarettesInContext(smokingContext);
+
+      expect(list.length, equals(2));
+    });
   });
 }
