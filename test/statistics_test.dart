@@ -35,7 +35,7 @@ void main() {
           await database.getAllSmokedCigarettesFromTo(startOfDay, endOfDay);
 
       expect(list.length, equals(2));
-    });
+    }, tags: "statistics");
 
     test(
         "create two cigarettes smoked yesterday, and one smoked today, and verify "
@@ -58,6 +58,6 @@ void main() {
           startOfYesterday, endOfYesterday);
 
       expect(list.length, equals(2));
-    });
+    }, tags: "statistics");
   });
 }

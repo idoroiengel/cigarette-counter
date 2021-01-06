@@ -2,3 +2,5 @@ tags:
   # A test that is related to Cigarette entity
   cigarette:
 
+  # A test that is related to statistics calculation in the project
+  statistics:
