@@ -23,7 +23,8 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
         title: Text("Cigarette counter"),
       ),
       drawer: SmokingCounterDrawerWidget(
-        onSmokingContextTapped: smokingContext,
+        // TODO implement an input for the String parameter in smokingContext
+        onSmokingContextTapped: () => smokingContext(""),
         onTodayTapped: showToday,
         onYesterdayTapped: showYesterday,
       ),
@@ -80,7 +81,7 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
     );
   }
 
-  void smokingContext() {
+  void smokingContext(String context) {
     setState(() {
       activeView = StreamBuilder(
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -95,7 +96,7 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
             );
           },
           stream: widget.database
-              .getAllSmokedCigarettesInContext("start of day")
+              .getAllSmokedCigarettesInContext(context)
               .asStream());
     });
   }

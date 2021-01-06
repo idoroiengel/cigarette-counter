@@ -26,8 +26,15 @@ abstract class AppDatabase extends FloorDatabase {
         chainSmokingNum: 1,
         smokingContext: "smoking context",
         reasonToSmoke: "reason to smoke");
+    var cigarette3 = new Cigarette(
+        timeOfSmoke: jiffy.startOf(Units.DAY),
+        chainSmokingNum: 1,
+        smokingContext: "I don't know",
+        reasonToSmoke: "reason to smoke"
+    );
     addCigarette(cigarette1);
     addCigarette(cigarette2);
+    addCigarette(cigarette3);
   }
 
   Future<int> addCigarette(Cigarette cigarette) async {
