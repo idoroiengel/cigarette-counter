@@ -27,9 +27,10 @@ void main() {
       Cigarette cigarette2 = new Cigarette(timeOfSmoke: endOfToday);
       Cigarette cigarette3 =
           new Cigarette(timeOfSmoke: jiffy.startOf(Units.YEAR));
-      database.addCigarette(cigarette1);
-      database.addCigarette(cigarette2);
-      database.addCigarette(cigarette3);
+      database
+        ..addCigarette(cigarette1)
+        ..addCigarette(cigarette2)
+        ..addCigarette(cigarette3);
 
       final list =
           await database.getAllSmokedCigarettesFromTo(startOfToday, endOfToday);
@@ -50,9 +51,10 @@ void main() {
       Cigarette cigarette2 = new Cigarette(timeOfSmoke: endOfYesterday);
       Cigarette cigarette3 =
           new Cigarette(timeOfSmoke: jiffy.startOf(Units.YEAR));
-      database.addCigarette(cigarette1);
-      database.addCigarette(cigarette2);
-      database.addCigarette(cigarette3);
+      database
+        ..addCigarette(cigarette1)
+        ..addCigarette(cigarette2)
+        ..addCigarette(cigarette3);
 
       final list = await database.getAllSmokedCigarettesFromTo(
           startOfYesterday, endOfYesterday);
@@ -72,9 +74,10 @@ void main() {
       Cigarette cigarette2 = new Cigarette(timeOfSmoke: endOfWeek);
       Cigarette cigarette3 =
           new Cigarette(timeOfSmoke: jiffy.startOf(Units.YEAR));
-      database.addCigarette(cigarette1);
-      database.addCigarette(cigarette2);
-      database.addCigarette(cigarette3);
+      database
+        ..addCigarette(cigarette1)
+        ..addCigarette(cigarette2)
+        ..addCigarette(cigarette3);
 
       final list =
           await database.getAllSmokedCigarettesFromTo(startOfWeek, endOfWeek);
@@ -101,9 +104,10 @@ void main() {
       } else {
         cigarette3 = new Cigarette(timeOfSmoke: jiffy.startOf(Units.YEAR));
       }
-      database.addCigarette(cigarette1);
-      database.addCigarette(cigarette2);
-      database.addCigarette(cigarette3);
+      database
+        ..addCigarette(cigarette1)
+        ..addCigarette(cigarette2)
+        ..addCigarette(cigarette3);
 
       final list =
           await database.getAllSmokedCigarettesFromTo(startOfMonth, endOfMonth);

@@ -22,6 +22,7 @@ void main() {
           smokingContext: "smoking context",
           timeOfSmoke: DateTime.now(),
           reasonToSmoke: "reason to smoke");
+
       final newlyCreatedId = await database.addCigarette(cigarette);
       bool assumption = newlyCreatedId > 0;
 
@@ -41,8 +42,7 @@ void main() {
           smokingContext: "smoking context",
           timeOfSmoke: DateTime.now(),
           reasonToSmoke: "reason to smoke");
-      await database.addCigarette(cigarette1);
-      await database.addCigarette(cigarette2);
+      database..addCigarette(cigarette1)..addCigarette(cigarette2);
 
       final List<Cigarette> list = await database.getAllSmokedCigarettes();
       bool assumption = list.length == 2;
