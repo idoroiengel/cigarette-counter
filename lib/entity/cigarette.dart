@@ -11,6 +11,7 @@ class Cigarette {
   int chainSmokingNum;
   DateTime timeOfSmoke;
 
+  // TODO add a smokingLocation property to this entity, and make adjustments appropriately
   Cigarette(
       {this.id,
       this.reasonToSmoke,
