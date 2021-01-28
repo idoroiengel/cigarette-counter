@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_cigarette_counter/components/add_cigarette_widget.dart';
+import 'package:my_cigarette_counter/components/smoking_counter_drawer_widget.dart';
 import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/routes.dart';
-import 'package:my_cigarette_counter/components/smoking_counter_drawer_widget.dart';
 
 class CigaretteCounterWidget extends StatefulWidget {
   AppDatabase database;
@@ -19,27 +20,15 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Cigarette counter"),
-      ),
       drawer: SmokingCounterDrawerWidget(
         // TODO implement an input for the String parameter in smokingContext
         onSmokingContextTapped: () => smokingContext(""),
         onTodayTapped: showToday,
         onYesterdayTapped: showYesterday,
       ),
-      floatingActionButton: RaisedButton(
-        onPressed: () => widget.database.addCigarette(
-          Cigarette(
-            timeOfSmoke: DateTime.now(),
-            smokingContext: "adding a cigarette to test system",
-            reasonToSmoke: "test system",
-            chainSmokingNum: 1,
-          ),
-        ),
-        child: Text("smoke a cigarette"),
+      body: Center(
+        child: AddCigaretteWidget(),
       ),
-      body: Container(child: activeView),
     );
   }
 
@@ -70,14 +59,14 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
   void showToday() {
     Navigator.pushNamed(
       context,
-      Routes.Today_Statistics,
+      Routes.today_statistics,
     );
   }
 
   void showYesterday() {
     Navigator.pushNamed(
       context,
-      Routes.Yesterday_Statistics,
+      Routes.yesterday_statistics,
     );
   }
 
