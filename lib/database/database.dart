@@ -30,8 +30,7 @@ abstract class AppDatabase extends FloorDatabase {
         timeOfSmoke: jiffy.startOf(Units.DAY),
         chainSmokingNum: 1,
         smokingContext: "I don't know",
-        reasonToSmoke: "reason to smoke"
-    );
+        reasonToSmoke: "reason to smoke");
     addCigarette(cigarette1);
     addCigarette(cigarette2);
     addCigarette(cigarette3);
