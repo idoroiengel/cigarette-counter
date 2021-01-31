@@ -23,6 +23,12 @@ class _AddCigaretteWidgetState extends State<AddCigaretteWidget>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: Color(AppColors.isabellinePaletteColor),
