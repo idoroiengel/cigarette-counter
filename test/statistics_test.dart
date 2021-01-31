@@ -117,7 +117,7 @@ void main() {
 
   group("statistics tests - smoking context tests", () {
     AppDatabase database;
-    final smokingContext = "This is a const final context";
+    final smokingContext = SmokingContext.goingOut;
     setUp(() async {
       database = await $FloorAppDatabase.inMemoryDatabaseBuilder().build();
     });
@@ -133,7 +133,7 @@ void main() {
       var cigarette1 = new Cigarette(smokingContext: smokingContext);
       var cigarette2 = new Cigarette(smokingContext: smokingContext);
       var cigarette3 =
-          new Cigarette(smokingContext: "I am a different context");
+          new Cigarette(smokingContext: SmokingContext.home);
 
       database
         ..addCigarette(cigarette1)

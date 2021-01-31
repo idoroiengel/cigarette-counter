@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:my_cigarette_counter/database/database.dart';
@@ -46,9 +47,9 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
       initialData: [
         Cigarette(
             chainSmokingNum: 1,
-            smokingContext: "smoking context",
+            smokingContext: SmokingContext.home,
             timeOfSmoke: DateTime.now(),
-            reasonToSmoke: "reason to smoke")
+            reasonToSmoke: SmokingReason.bedtimeCigarette)
       ],
       stream: widget.database.getAllSmokedCigarettes().asStream(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -76,9 +77,9 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
       initialData: [
         Cigarette(
             chainSmokingNum: 1,
-            smokingContext: "smoking context",
+            smokingContext: SmokingContext.work,
             timeOfSmoke: DateTime.now(),
-            reasonToSmoke: "reason to smoke")
+            reasonToSmoke: SmokingReason.bathroom)
       ],
       stream: widget.database
           .getAllSmokedCigarettesFromTo(
@@ -110,9 +111,9 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
       initialData: [
         Cigarette(
             chainSmokingNum: 1,
-            smokingContext: "smoking context",
+            smokingContext: SmokingContext.goingOut,
             timeOfSmoke: DateTime.now(),
-            reasonToSmoke: "reason to smoke")
+            reasonToSmoke: SmokingReason.hunger)
       ],
       stream: widget.database
           .getAllSmokedCigarettesFromTo(
@@ -185,8 +186,8 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
         new TableRow(
           children: [
             Text(jiffy.from(element.timeOfSmoke)),
-            Text(element.smokingContext),
-            Text(element.reasonToSmoke),
+            Text(EnumToString.convertToString(element.smokingContext)),
+            Text(EnumToString.convertToString(element.reasonToSmoke)),
             Text(element.id.toString())
           ],
         ),

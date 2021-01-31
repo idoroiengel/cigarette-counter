@@ -4,10 +4,8 @@ import 'package:floor/floor.dart';
 class Cigarette {
   @PrimaryKey(autoGenerate: true)
   final int id;
-  String reasonToSmoke;
-
-  // maybe make this an enum, as there are only a number of contexts one can smoke
-  String smokingContext;
+  SmokingReason reasonToSmoke;
+  SmokingContext smokingContext;
   int chainSmokingNum;
   DateTime timeOfSmoke;
 
@@ -23,4 +21,22 @@ class Cigarette {
   String toString() {
     return 'Cigarette{id: $id, reasonToSmoke: $reasonToSmoke, smokingContext: $smokingContext, chainSmokingNum: $chainSmokingNum, timeOfSmoke: $timeOfSmoke}';
   }
+}
+
+enum SmokingReason {
+  boring,
+  hunger,
+  sex,
+  food,
+  bathroom,
+  morningCigarette,
+  bedtimeCigarette,
+}
+
+enum SmokingContext {
+  home,
+  work,
+  busStop,
+  friends,
+  goingOut,
 }

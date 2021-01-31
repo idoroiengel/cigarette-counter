@@ -19,9 +19,9 @@ void main() {
         () async {
       Cigarette cigarette = new Cigarette(
           chainSmokingNum: 1,
-          smokingContext: "smoking context",
+          smokingContext: SmokingContext.busStop,
           timeOfSmoke: DateTime.now(),
-          reasonToSmoke: "reason to smoke");
+          reasonToSmoke: SmokingReason.hunger);
 
       final newlyCreatedId = await database.addCigarette(cigarette);
       bool assumption = newlyCreatedId > 0;
@@ -34,14 +34,14 @@ void main() {
         () async {
       Cigarette cigarette1 = new Cigarette(
           chainSmokingNum: 1,
-          smokingContext: "smoking context",
+          smokingContext: SmokingContext.home,
           timeOfSmoke: DateTime.now(),
-          reasonToSmoke: "reason to smoke");
+          reasonToSmoke: SmokingReason.sex);
       Cigarette cigarette2 = new Cigarette(
           chainSmokingNum: 1,
-          smokingContext: "smoking context",
+          smokingContext: SmokingContext.goingOut,
           timeOfSmoke: DateTime.now(),
-          reasonToSmoke: "reason to smoke");
+          reasonToSmoke: SmokingReason.morningCigarette);
       database..addCigarette(cigarette1)..addCigarette(cigarette2);
 
       final List<Cigarette> list = await database.getAllSmokedCigarettes();

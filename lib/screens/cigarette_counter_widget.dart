@@ -22,7 +22,7 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
     return Scaffold(
       drawer: SmokingCounterDrawerWidget(
         // TODO implement an input for the String parameter in smokingContext
-        onSmokingContextTapped: () => smokingContext(""),
+        onSmokingContextTapped: () => smokingContext(null),
         onTodayTapped: showToday,
         onYesterdayTapped: showYesterday,
       ),
@@ -70,7 +70,7 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
     );
   }
 
-  void smokingContext(String context) {
+  void smokingContext(SmokingContext context) {
     setState(() {
       activeView = StreamBuilder(
           builder: (BuildContext context, AsyncSnapshot snapshot) {
