@@ -2,6 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_cigarette_counter/colors.dart';
+import 'package:my_cigarette_counter/routes.dart';
 
 class AddCigaretteWidget extends StatefulWidget {
   @override
@@ -53,6 +54,7 @@ class _AddCigaretteWidgetState extends State<AddCigaretteWidget>
         ),
         Container(
           height: 250,
+          // TODO optimize the AnimatedBuilder's rebuilds
           child: AnimatedBuilder(
             animation: CurvedAnimation(
                 parent: _controller, curve: Curves.fastOutSlowIn),
@@ -72,7 +74,10 @@ class _AddCigaretteWidgetState extends State<AddCigaretteWidget>
                         height: 150,
                       ),
                     ),
-                    onTap: () => _controller..repeat(),
+                    onTap: () => {
+                      _controller..repeat(),
+                      Navigator.pushNamed(context, Routes.add_cigarette_details)
+                    },
                   ),
                 ],
               );

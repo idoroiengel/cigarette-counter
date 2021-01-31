@@ -30,6 +30,6 @@ class CigaretteCounterApp extends StatelessWidget {
       ),
       routes: Routes.getRoutes(database),
       debugShowCheckedModeBanner: false,
-    );
+  );
   }
 }
