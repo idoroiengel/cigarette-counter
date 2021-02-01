@@ -2,6 +2,7 @@ import 'package:dialog_spinner/dialog_spinner.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 
@@ -62,7 +63,31 @@ class _AddCigaretteDetailsWidgetState extends State<AddCigaretteDetailsWidget> {
             ),
             elevation: 3,
             margin: EdgeInsets.all(10),
-          )
+          ),
+          Container(
+            height: 56,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Material(
+              elevation: 2,
+              child: Container(
+                color: Color(AppColors.isabellinePaletteColor),
+                child: StreamBuilder(
+                    // TODO add initial data to avoid having null value at first
+                    stream: Stream.periodic(Duration(seconds: 5), (i) {
+                      return Jiffy().format('MMMM do yyyy, h:mm:ss a');
+                    }),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      return Text(
+                        snapshot.data.toString(),
+                        style: TextStyle(
+                          color: Color(AppColors.fireEngineRedPaletteColor),
+                        ),
+                      );
+                    }),
+              ),
+            ),
+          ),
         ],
       ),
     );

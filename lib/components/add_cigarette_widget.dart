@@ -75,7 +75,7 @@ class _AddCigaretteWidgetState extends State<AddCigaretteWidget>
                       ),
                     ),
                     onTap: () => {
-                      _controller..repeat(),
+                      // _controller..repeat(),
                       Navigator.pushNamed(context, Routes.add_cigarette_details)
                     },
                   ),
