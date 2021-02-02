@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_cigarette_counter/database/database.dart';
-import 'package:my_cigarette_counter/screens/add_cigarette_details_widget.dart';
 import 'package:my_cigarette_counter/screens/cigarette_counter_widget.dart';
+import 'package:my_cigarette_counter/screens/cigarette_details_widget.dart';
 import 'package:my_cigarette_counter/screens/smoking_statistics_widget.dart';
 
 class Routes {
@@ -23,7 +23,9 @@ class Routes {
             database: database,
             status: SmokingStatisticsStatus.YESTERDAY,
           ),
-      Routes.add_cigarette_details: (context) => AddCigaretteDetailsWidget()
+      Routes.add_cigarette_details: (context) => CigaretteDetailsWidget(
+        database: database,
+      )
     };
   }
 }
