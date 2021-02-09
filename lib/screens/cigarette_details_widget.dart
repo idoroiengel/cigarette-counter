@@ -8,7 +8,7 @@ import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 
 class CigaretteDetailsWidget extends StatefulWidget {
-  AppDatabase database;
+  final AppDatabase database;
 
   @override
   _CigaretteDetailsWidgetState createState() => _CigaretteDetailsWidgetState();
@@ -23,6 +23,8 @@ class _CigaretteDetailsWidgetState extends State<CigaretteDetailsWidget> {
   @override
   void initState() {
     super.initState();
+    smokingContext = SmokingContext.values.first;
+    smokingReason = SmokingReason.values.first;
   }
 
   @override

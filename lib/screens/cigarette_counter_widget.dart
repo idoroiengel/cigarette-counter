@@ -6,7 +6,7 @@ import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/routes.dart';
 
 class CigaretteCounterWidget extends StatefulWidget {
-  AppDatabase database;
+  final AppDatabase database;
 
   CigaretteCounterWidget({this.database});
 

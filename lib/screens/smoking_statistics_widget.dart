@@ -5,8 +5,8 @@ import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 
 class SmokingStatisticsWidget extends StatefulWidget {
-  AppDatabase database;
-  SmokingStatisticsStatus status;
+  final AppDatabase database;
+  final SmokingStatisticsStatus status;
 
   SmokingStatisticsWidget({this.database, @required this.status});
 
@@ -186,8 +186,8 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
         new TableRow(
           children: [
             Text(jiffy.from(element.timeOfSmoke)),
-            Text(EnumToString.convertToString(element.smokingContext)),
-            Text(EnumToString.convertToString(element.reasonToSmoke)),
+            Text(EnumToString.convertToString(element.smokingContext) ?? ""),
+            Text(EnumToString.convertToString(element.reasonToSmoke) ?? ""),
             Text(element.id.toString())
           ],
         ),
