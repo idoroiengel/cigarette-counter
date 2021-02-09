@@ -1,5 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
@@ -18,15 +19,25 @@ class SmokingStatisticsWidget extends StatefulWidget {
 class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        designSize: ScreenUtil.defaultSize, allowFontScaling: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Smoking statistics",
-        ),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: showStatistics(widget.status),
+      body: Column(
+        children: [
+          Container(
+            child: Text(
+              "Smoking Statistics",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(30),
+              ),
+            ),
+            padding: EdgeInsets.only(top: 10),
+          ),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: showStatistics(widget.status),
+          ),
+        ],
       ),
     );
   }
@@ -186,8 +197,20 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
         new TableRow(
           children: [
             Text(jiffy.from(element.timeOfSmoke)),
-            Text(EnumToString.convertToString(element.smokingContext) ?? ""),
-            Text(EnumToString.convertToString(element.reasonToSmoke) ?? ""),
+            Text(
+              EnumToString.convertToString(
+                    element.smokingContext,
+                    camelCase: true,
+                  ) ??
+                  "",
+            ),
+            Text(
+              EnumToString.convertToString(
+                    element.reasonToSmoke,
+                    camelCase: true,
+                  ) ??
+                  "",
+            ),
             Text(element.id.toString())
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/routes.dart';
@@ -31,8 +32,10 @@ class _AddCigaretteWidgetState extends State<AddCigaretteWidget>
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        designSize: ScreenUtil.defaultSize, allowFontScaling: false);
     return Container(
-      color: Color(AppColors.isabellinePaletteColor),
+      color: Color(AppColors.celadonBluePaletteColor),
       child: _buildBody(),
     );
   }
@@ -46,14 +49,14 @@ class _AddCigaretteWidgetState extends State<AddCigaretteWidget>
             "Tap for cigarette smoked",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 30,
-              color: Colors.black,
+              fontSize: ScreenUtil().setSp(50),
+              color: Color(AppColors.isabellinePaletteColor),
             ),
           ),
           padding: EdgeInsets.only(bottom: 30.0),
         ),
         Container(
-          height: 250,
+          height: ScreenUtil().setHeight(250),
           // TODO optimize the AnimatedBuilder's rebuilds
           child: AnimatedBuilder(
             animation: CurvedAnimation(
@@ -71,11 +74,11 @@ class _AddCigaretteWidgetState extends State<AddCigaretteWidget>
                     child: Align(
                       child: SvgPicture.asset(
                         'assets/cigarettes/smoking_red_circle.svg',
-                        height: 150,
+                        height: ScreenUtil().setHeight(300),
+                        width: ScreenUtil().setWidth(300),
                       ),
                     ),
                     onTap: () => {
-                      // _controller..repeat(),
                       Navigator.pushNamed(context, Routes.add_cigarette_details)
                     },
                   ),
