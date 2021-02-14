@@ -3,11 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/components/add_cigarette_widget.dart';
-import 'package:my_cigarette_counter/components/smoking_counter_drawer_widget.dart';
+import 'package:my_cigarette_counter/components/cigarette_counter_modal_bottom_sheet_widget.dart';
 import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
-import 'package:my_cigarette_counter/routes.dart';
-import 'package:my_cigarette_counter/screens/smoking_statistics_widget.dart';
 
 class CigaretteCounterWidget extends StatefulWidget {
   final AppDatabase database;
@@ -26,12 +24,6 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
     ScreenUtil.init(context,
         designSize: ScreenUtil.defaultSize, allowFontScaling: false);
     return Scaffold(
-      drawer: SmokingCounterDrawerWidget(
-        // TODO implement an input for the String parameter in smokingContext
-        onSmokingContextTapped: () => smokingContext(null),
-        onTodayTapped: showToday,
-        onYesterdayTapped: showYesterday,
-      ),
       body: Center(
         child: AddCigaretteWidget(),
       ),
@@ -68,14 +60,17 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
 
   Future buildShowMaterialModalBottomSheet(BuildContext context) {
     return showMaterialModalBottomSheet(
-        context: context,
-        expand: true,
-        barrierColor: Color(AppColors.isabellinePaletteColor),
-        builder: (context) => Container(
-                child: SmokingStatisticsWidget(
-              database: widget.database,
-              status: SmokingStatisticsStatus.DEFAULT,
-            )));
+      context: context,
+      expand: true,
+      barrierColor: Color(AppColors.isabellinePaletteColor),
+      builder: (context) => Container(
+        child: CigaretteCounterModalBottomSheetWidget(),
+        // SmokingStatisticsWidget(
+        //   database: widget.database,
+        //   status: SmokingStatisticsStatus.DEFAULT,
+        // ),
+      ),
+    );
   }
 
   @override
@@ -100,39 +95,5 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
         }
       },
     );
-  }
-
-  void showToday() {
-    Navigator.pushNamed(
-      context,
-      Routes.today_statistics,
-    );
-  }
-
-  void showYesterday() {
-    Navigator.pushNamed(
-      context,
-      Routes.yesterday_statistics,
-    );
-  }
-
-  void smokingContext(SmokingContext context) {
-    setState(() {
-      activeView = StreamBuilder(
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return ListView.separated(
-              itemCount: (snapshot.data as List<Cigarette>).length,
-              itemBuilder: (context, index) {
-                return Text(
-                    (snapshot.data as List<Cigarette>)[index].toString());
-              },
-              separatorBuilder: (context, index) =>
-                  Divider(color: Colors.black),
-            );
-          },
-          stream: widget.database
-              .getAllSmokedCigarettesInContext(context)
-              .asStream());
-    });
   }
 }

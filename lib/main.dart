@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_cigarette_counter/routes.dart';
+import 'package:my_cigarette_counter/view_models/main_view_model.dart';
 
 import 'database/database.dart';
 import 'screens/cigarette_counter_widget.dart';
@@ -9,6 +10,7 @@ Future<void> main() async {
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   database.initWithMockData();
+  MainViewModel.database = database;
   runApp(CigaretteCounterApp(database: database));
 }
 
@@ -28,6 +30,7 @@ class CigaretteCounterApp extends StatelessWidget {
       home: CigaretteCounterWidget(
         database: database,
       ),
+      // home: CigaretteCounterModalBottomSheetWidget(),
       routes: Routes.getRoutes(database),
       debugShowCheckedModeBanner: false,
   );

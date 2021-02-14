@@ -39,4 +39,5 @@ enum SmokingContext {
   busStop,
   friends,
   goingOut,
+  waiting,
 }
