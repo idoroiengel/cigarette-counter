@@ -2,14 +2,13 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
+import 'package:my_cigarette_counter/view_models/smoking_statistics_view_model_impl.dart';
 
 class SmokingStatisticsWidget extends StatefulWidget {
-  final AppDatabase database;
   final SmokingStatisticsStatus status;
 
-  SmokingStatisticsWidget({this.database, @required this.status});
+  SmokingStatisticsWidget({@required this.status});
 
   @override
   _SmokingStatisticsWidgetState createState() =>
@@ -17,6 +16,9 @@ class SmokingStatisticsWidget extends StatefulWidget {
 }
 
 class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
+  SmokingStatisticsViewModelImpl _smokingStatisticsViewModelImpl;
+  var routeData;
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -44,92 +46,37 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
 
   Widget showStatistics(SmokingStatisticsStatus status) {
     if (status == SmokingStatisticsStatus.TODAY) {
-      return Container(child: todayStream());
+      return Container(
+          child: loadStreamData(
+              _smokingStatisticsViewModelImpl.todaySmokedCigarettes));
     } else if (status == SmokingStatisticsStatus.YESTERDAY) {
-      return Container(child: yesterdayStream());
+      return Container(
+          child: loadStreamData(
+              _smokingStatisticsViewModelImpl.yesterdaySmokedCigarettes));
     } else if (status == SmokingStatisticsStatus.DEFAULT) {
-      return Container(child: allStream());
+      return Container(
+          child: loadStreamData(
+              _smokingStatisticsViewModelImpl.allSmokedCigarettes));
+    } else if (status == SmokingStatisticsStatus.SMOKING_CONTEXT) {
+      return Container(
+          child: loadStreamData(_smokingStatisticsViewModelImpl
+              .cigarettesBySmokingContext(routeData)));
     }
     return null;
   }
 
-  StreamBuilder<List<Cigarette>> allStream() {
+  StreamBuilder<List<Cigarette>> loadStreamData(
+      Stream<List<Cigarette>> stream) {
     return StreamBuilder(
       initialData: [
         Cigarette(
-            chainSmokingNum: 1,
-            smokingContext: SmokingContext.home,
-            timeOfSmoke: DateTime.now(),
-            reasonToSmoke: SmokingReason.bedtimeCigarette)
+          chainSmokingNum: 1,
+          smokingContext: SmokingContext.home,
+          timeOfSmoke: DateTime.now(),
+          reasonToSmoke: SmokingReason.bedtimeCigarette,
+        )
       ],
-      stream: widget.database.getAllSmokedCigarettes().asStream(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        }
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        } else {
-          return Table(
-            border: TableBorder.all(
-              color: Colors.black,
-              width: 1.0,
-            ),
-            children: populateTable(snapshot),
-          );
-        }
-      },
-    );
-  }
-
-  StreamBuilder<List<Cigarette>> yesterdayStream() {
-    var jiffy = new Jiffy();
-    return StreamBuilder(
-      initialData: [
-        Cigarette(
-            chainSmokingNum: 1,
-            smokingContext: SmokingContext.work,
-            timeOfSmoke: DateTime.now(),
-            reasonToSmoke: SmokingReason.bathroom)
-      ],
-      stream: widget.database
-          .getAllSmokedCigarettesFromTo(
-              jiffy.startOf(Units.DAY).subtract(Duration(days: 1)),
-              jiffy.endOf(Units.DAY).subtract(Duration(days: 1)))
-          .asStream(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        }
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        } else {
-          return Table(
-            border: TableBorder.all(
-              color: Colors.black,
-              width: 1.0,
-            ),
-            children: populateTable(snapshot),
-          );
-        }
-      },
-    );
-  }
-
-  StreamBuilder<List<Cigarette>> todayStream() {
-    var jiffy = new Jiffy();
-    return StreamBuilder(
-      initialData: [
-        Cigarette(
-            chainSmokingNum: 1,
-            smokingContext: SmokingContext.goingOut,
-            timeOfSmoke: DateTime.now(),
-            reasonToSmoke: SmokingReason.hunger)
-      ],
-      stream: widget.database
-          .getAllSmokedCigarettesFromTo(
-              jiffy.startOf(Units.DAY), jiffy.endOf(Units.DAY))
-          .asStream(),
+      stream: stream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
           return Text(snapshot.error.toString());
@@ -218,6 +165,18 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
     });
     return list;
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _smokingStatisticsViewModelImpl = SmokingStatisticsViewModelImpl();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeData = ModalRoute.of(context).settings.arguments;
+  }
 }
 
 enum SmokingStatisticsStatus {
@@ -225,5 +184,6 @@ enum SmokingStatisticsStatus {
   YESTERDAY,
   LAST_WEEK,
   LAST_MONTH,
-  DEFAULT
+  DEFAULT,
+  SMOKING_CONTEXT,
 }
