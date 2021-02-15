@@ -4,21 +4,13 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/components/add_cigarette_widget.dart';
 import 'package:my_cigarette_counter/components/cigarette_counter_modal_bottom_sheet_widget.dart';
-import 'package:my_cigarette_counter/database/database.dart';
-import 'package:my_cigarette_counter/entity/cigarette.dart';
 
 class CigaretteCounterWidget extends StatefulWidget {
-  final AppDatabase database;
-
-  CigaretteCounterWidget({this.database});
-
   @override
   _CigaretteCounterWidgetState createState() => _CigaretteCounterWidgetState();
 }
 
 class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
-  Widget activeView;
-
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -66,30 +58,6 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
       builder: (context) => Container(
         child: CigaretteCounterModalBottomSheetWidget(),
       ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    activeView = StreamBuilder(
-      stream: widget.database.getAllSmokedCigarettes().asStream(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        }
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        } else {
-          return ListView.separated(
-            itemCount: (snapshot.data as List<Cigarette>).length,
-            itemBuilder: (context, index) {
-              return Text((snapshot.data as List<Cigarette>)[index].toString());
-            },
-            separatorBuilder: (context, index) => Divider(color: Colors.black),
-          );
-        }
-      },
     );
   }
 }

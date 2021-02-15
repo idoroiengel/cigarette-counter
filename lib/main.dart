@@ -27,12 +27,10 @@ class CigaretteCounterApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CigaretteCounterWidget(
-        database: database,
-      ),
+      home: CigaretteCounterWidget(),
       // home: CigaretteCounterModalBottomSheetWidget(),
       routes: Routes.getRoutes(database),
       debugShowCheckedModeBanner: false,
-  );
+    );
   }
 }

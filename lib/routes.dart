@@ -19,9 +19,7 @@ class Routes {
   // TODO remove this parameter, because we want the database to be injected via MainViewModel rather than via getRoutes
   static Map<String, WidgetBuilder> getRoutes(AppDatabase database) {
     return {
-      Routes.cigarette_counter: (context) => CigaretteCounterWidget(
-            database: database,
-          ),
+      Routes.cigarette_counter: (context) => CigaretteCounterWidget(),
       Routes.today_statistics: (context) => SmokingStatisticsWidget(
             status: SmokingStatisticsStatus.TODAY,
           ),
@@ -38,11 +36,11 @@ class Routes {
             database: database,
           ),
       Routes.smoking_context_choices: (context) => SmokingChoicesWidget(
-        routeArguments: "smokingContext",
-      ),
+            routeArguments: "smokingContext",
+          ),
       Routes.smoking_reason_choices: (context) => SmokingChoicesWidget(
-        routeArguments: "smokingReason",
-      ),
+            routeArguments: "smokingReason",
+          ),
     };
   }
 }
