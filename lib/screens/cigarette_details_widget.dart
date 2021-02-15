@@ -111,6 +111,7 @@ class _CigaretteDetailsWidgetState extends State<CigaretteDetailsWidget> {
             alignment: Alignment.bottomCenter,
             child: RaisedButton(
               onPressed: () => {
+                // TODO implement view model architecture to eliminate use of database in this scope
                 widget.database
                     .addCigarette(
                       Cigarette(
