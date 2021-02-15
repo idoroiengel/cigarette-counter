@@ -4,25 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:my_cigarette_counter/colors.dart';
-import 'package:my_cigarette_counter/database/database.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
+import 'package:my_cigarette_counter/view_models/cigarette_details_view_model_impl.dart';
 
 class CigaretteDetailsWidget extends StatefulWidget {
-  final AppDatabase database;
-
   @override
   _CigaretteDetailsWidgetState createState() => _CigaretteDetailsWidgetState();
-
-  CigaretteDetailsWidget({this.database});
 }
 
 class _CigaretteDetailsWidgetState extends State<CigaretteDetailsWidget> {
+  CigaretteDetailsViewModelImpl _cigaretteDetailsViewModelImpl;
   var smokingReason;
   var smokingContext;
 
   @override
   void initState() {
     super.initState();
+    _cigaretteDetailsViewModelImpl = CigaretteDetailsViewModelImpl();
     smokingContext = SmokingContext.values.first;
     smokingReason = SmokingReason.values.first;
   }
@@ -110,10 +108,9 @@ class _CigaretteDetailsWidgetState extends State<CigaretteDetailsWidget> {
           Align(
             alignment: Alignment.bottomCenter,
             child: RaisedButton(
-              onPressed: () => {
-                // TODO implement view model architecture to eliminate use of database in this scope
-                widget.database
-                    .addCigarette(
+              onPressed: () {
+                _cigaretteDetailsViewModelImpl
+                    .inputAddCigarette(
                       Cigarette(
                         smokingContext: this.smokingContext,
                         reasonToSmoke: this.smokingReason,
@@ -121,7 +118,7 @@ class _CigaretteDetailsWidgetState extends State<CigaretteDetailsWidget> {
                         chainSmokingNum: 1,
                       ),
                     )
-                    .whenComplete(() => Navigator.pop(context))
+                    .listen(null, onDone: () => Navigator.pop(context));
               },
               child: Text("OK"),
               textColor: Color(AppColors.isabellinePaletteColor),

@@ -11,13 +11,11 @@ Future<void> main() async {
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   database.initWithMockData();
   MainViewModel.database = database;
-  runApp(CigaretteCounterApp(database: database));
+  runApp(CigaretteCounterApp());
 }
 
 class CigaretteCounterApp extends StatelessWidget {
-  const CigaretteCounterApp({this.database});
-
-  final AppDatabase database;
+  const CigaretteCounterApp();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +27,7 @@ class CigaretteCounterApp extends StatelessWidget {
       ),
       home: CigaretteCounterWidget(),
       // home: CigaretteCounterModalBottomSheetWidget(),
-      routes: Routes.getRoutes(database),
+      routes: Routes.getRoutes(),
       debugShowCheckedModeBanner: false,
     );
   }
