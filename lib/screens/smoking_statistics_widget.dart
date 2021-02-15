@@ -61,6 +61,10 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
       return Container(
           child: loadStreamData(_smokingStatisticsViewModelImpl
               .cigarettesBySmokingContext(routeData)));
+    } else if (status == SmokingStatisticsStatus.SMOKING_REASON) {
+      return Container(
+          child: loadStreamData(_smokingStatisticsViewModelImpl
+              .cigaretteBySmokingReason(routeData)));
     }
     return null;
   }
@@ -186,4 +190,5 @@ enum SmokingStatisticsStatus {
   LAST_MONTH,
   DEFAULT,
   SMOKING_CONTEXT,
+  SMOKING_REASON,
 }

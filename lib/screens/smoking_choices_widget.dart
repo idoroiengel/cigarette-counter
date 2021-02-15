@@ -3,17 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/routes.dart';
-import 'package:my_cigarette_counter/view_models/smoking_context_choices_view_model_impl.dart';
+import 'package:my_cigarette_counter/view_models/smoking_choices_view_model_impl.dart';
 
-class SmokingContextChoicesWidget extends StatefulWidget {
+class SmokingChoicesWidget extends StatefulWidget {
+  var routeArguments;
+
+  SmokingChoicesWidget({this.routeArguments});
+
   @override
-  _SmokingContextChoicesWidgetState createState() =>
-      _SmokingContextChoicesWidgetState();
+  _SmokingChoicesWidgetState createState() => _SmokingChoicesWidgetState();
 }
 
-class _SmokingContextChoicesWidgetState
-    extends State<SmokingContextChoicesWidget> {
-  SmokingContextChoicesViewModelImpl _smokingContextChoicesViewModelImpl;
+class _SmokingChoicesWidgetState extends State<SmokingChoicesWidget> {
+  SmokingChoicesViewModelImpl _smokingChoicesViewModelImpl;
+
+  // var routeData;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class _SmokingContextChoicesWidgetState
       padding: EdgeInsets.symmetric(vertical: 20),
       color: Color(AppColors.fireEngineRedPaletteColor),
       child: StreamBuilder(
-        stream: _smokingContextChoicesViewModelImpl.outputSmokingContext,
+        stream: determineStreamType(),
         builder: (context, snapshot) {
           return GridView.builder(
             itemCount: SmokingContext.values.length,
@@ -34,11 +38,7 @@ class _SmokingContextChoicesWidgetState
                 child: RaisedButton(
                   color: Color(AppColors.isabellinePaletteColor),
                   // TODO implement with SmokingContext route, and show statistics according to choice
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    Routes.smoking_context_statistics,
-                    arguments: SmokingContext.values[index],
-                  ),
+                  onPressed: () => buildPushNamed(context, index),
                   child: Text(
                     EnumToString.convertToString(snapshot.data[index],
                         camelCase: true),
@@ -56,9 +56,32 @@ class _SmokingContextChoicesWidgetState
     );
   }
 
+  Future<Object> buildPushNamed(BuildContext context, int index) {
+    if (widget.routeArguments == "smokingContext") {
+      return Navigator.pushNamed(
+        context,
+        Routes.smoking_context_statistics,
+        arguments: SmokingContext.values[index],
+      );
+    } else {
+      return Navigator.pushNamed(context, Routes.smoking_reason_statistics,
+          arguments: SmokingReason.values[index]);
+    }
+  }
+
+  Stream<List> determineStreamType() {
+    if (widget.routeArguments == "smokingContext") {
+      print("routeData smoking context");
+      return _smokingChoicesViewModelImpl.outputSmokingContext;
+    } else {
+      print("routeData smoking reason");
+      return _smokingChoicesViewModelImpl.outputSmokingReason;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    _smokingContextChoicesViewModelImpl = SmokingContextChoicesViewModelImpl();
+    _smokingChoicesViewModelImpl = SmokingChoicesViewModelImpl();
   }
 }

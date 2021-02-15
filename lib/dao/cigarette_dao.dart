@@ -23,4 +23,7 @@ abstract class CigaretteDao {
 
   @Query("SELECT * FROM Cigarette WHERE smokingContext = :smokingContext")
   Future<List<Cigarette>> getAlSmokedCigarettesInContext(SmokingContext smokingContext);
+
+  @Query("SELECT * FROM Cigarette WHERE reasonToSmoke = :smokingReason")
+  Future<List<Cigarette>> getAllSmokedCigarettesByReason(SmokingReason smokingReason);
 }

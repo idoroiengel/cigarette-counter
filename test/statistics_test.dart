@@ -132,8 +132,7 @@ void main() {
         () async {
       var cigarette1 = new Cigarette(smokingContext: smokingContext);
       var cigarette2 = new Cigarette(smokingContext: smokingContext);
-      var cigarette3 =
-          new Cigarette(smokingContext: SmokingContext.home);
+      var cigarette3 = new Cigarette(smokingContext: SmokingContext.home);
 
       database
         ..addCigarette(cigarette1)
@@ -144,6 +143,34 @@ void main() {
           await database.getAllSmokedCigarettesInContext(smokingContext);
 
       expect(list.length, equals(2));
+    }, tags: "statistics");
+  });
+
+  group("statistics tests - smoking reason tests", () {
+    AppDatabase database;
+    final smokingReason = SmokingReason.hunger;
+    setUp(() async {
+      database = await $FloorAppDatabase.inMemoryDatabaseBuilder().build();
     });
+    tearDown(() async {
+      await database.close();
+    });
+
+    test(
+        "create three cigarettes, two of which has identical smoking reason, and check that they are retrieved when correct parameter is called to the method",
+        () async {
+      var cigarette1 = new Cigarette(reasonToSmoke: smokingReason);
+      var cigarette2 = new Cigarette(reasonToSmoke: smokingReason);
+      var cigarette3 = new Cigarette(reasonToSmoke: SmokingReason.bathroom);
+
+      database
+        ..addCigarette(cigarette1)
+        ..addCigarette(cigarette2)
+        ..addCigarette(cigarette3);
+
+      final list = await database.getAllSmokedCigarettesByReason(smokingReason);
+
+      expect(list.length, equals(2));
+    }, tags: "statistics");
   });
 }

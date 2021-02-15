@@ -10,4 +10,6 @@ abstract class SmokingStatisticsViewModel extends MainViewModel {
 
   Stream<List<Cigarette>> cigarettesBySmokingContext(
       SmokingContext smokingContext);
+
+  Stream<List<Cigarette>> cigaretteBySmokingReason(SmokingReason smokingReason);
 }

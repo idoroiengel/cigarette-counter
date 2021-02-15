@@ -65,10 +65,6 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
       barrierColor: Color(AppColors.isabellinePaletteColor),
       builder: (context) => Container(
         child: CigaretteCounterModalBottomSheetWidget(),
-        // SmokingStatisticsWidget(
-        //   database: widget.database,
-        //   status: SmokingStatisticsStatus.DEFAULT,
-        // ),
       ),
     );
   }

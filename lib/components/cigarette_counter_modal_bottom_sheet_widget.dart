@@ -1,6 +1,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/routes.dart';
 import 'package:my_cigarette_counter/view_models/cigarette_counter_modal_bottom_sheet_view_model_impl.dart';
@@ -30,7 +31,7 @@ class _CigaretteCounterModalBottomSheetWidgetState
     ScreenUtil.init(context,
         designSize: ScreenUtil.defaultSize, allowFontScaling: false);
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Color(AppColors.isabellinePaletteColor),
       body: Column(
         children: [
           Container(
@@ -50,16 +51,16 @@ class _CigaretteCounterModalBottomSheetWidgetState
                 .outputRecentCigarettes,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               List<Cigarette> items = snapshot.data;
-              if(snapshot.hasData && !snapshot.hasError){
+              if (snapshot.hasData && !snapshot.hasError) {
                 return ListView.builder(
                   itemCount: recent_cigarettes_number,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     // TODO implement a RecentCigaretteWidget and show recent cigarettes in that widget
                     return Container(
-                      child: Text(
-                        EnumToString.convertToString(items[index].smokingContext, camelCase: true)
-                      ),
+                      child: Text(EnumToString.convertToString(
+                          items[index].reasonToSmoke,
+                          camelCase: true)),
                     );
                   },
                 );
@@ -76,7 +77,8 @@ class _CigaretteCounterModalBottomSheetWidgetState
             child: Card(
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
-                onTap: () => Navigator.pushNamed(context, Routes.smoking_context_choices),
+                onTap: () => Navigator.pushNamed(
+                    context, Routes.smoking_context_choices),
                 child: Container(
                   child: Text("Smoking context"),
                 ),
@@ -90,9 +92,7 @@ class _CigaretteCounterModalBottomSheetWidgetState
             child: Card(
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
-                onTap: () {
-                  print("card tapped...");
-                },
+                onTap: () => Navigator.pushNamed(context, Routes.smoking_reason_choices),
                 child: Container(
                   child: Text("Smoking reason"),
                 ),
@@ -103,25 +103,4 @@ class _CigaretteCounterModalBottomSheetWidgetState
       ),
     );
   }
-
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     body: Column(
-//       children: [
-
-//         StreamBuilder(
-//           stream: _cigaretteCounterModalBottomSheetViewModelImpl
-//               .outputSmokingContext,
-//           builder: (BuildContext context, AsyncSnapshot snapshot) {
-//             return Container(
-//               child: Text(snapshot.data.toString()),
-//             );
-//           },
-//         )
-//       ],
-//     ),
-//   );
-// }
 }

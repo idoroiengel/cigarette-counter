@@ -59,4 +59,8 @@ abstract class AppDatabase extends FloorDatabase {
       SmokingContext smokingContext) {
     return _cigaretteDao.getAlSmokedCigarettesInContext(smokingContext);
   }
+
+  Future<List<Cigarette>> getAllSmokedCigarettesByReason(SmokingReason smokingReason){
+    return _cigaretteDao.getAllSmokedCigarettesByReason(smokingReason);
+  }
 }
