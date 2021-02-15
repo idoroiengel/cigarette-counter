@@ -55,9 +55,7 @@ class _CigaretteCounterWidgetState extends State<CigaretteCounterWidget> {
       context: context,
       expand: true,
       barrierColor: Color(AppColors.isabellinePaletteColor),
-      builder: (context) => Container(
-        child: CigaretteCounterModalBottomSheetWidget(),
-      ),
+      builder: (context) => CigaretteCounterModalBottomSheetWidget(),
     );
   }
 }

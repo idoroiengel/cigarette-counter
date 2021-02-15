@@ -1,7 +1,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jiffy/jiffy.dart';
+import 'package:my_cigarette_counter/components/cigarette_details_widget.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/view_models/smoking_statistics_view_model_impl.dart';
 
@@ -24,24 +24,42 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
     ScreenUtil.init(context,
         designSize: ScreenUtil.defaultSize, allowFontScaling: false);
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            child: Text(
-              "Smoking Statistics",
-              style: TextStyle(
-                fontSize: ScreenUtil().setSp(30),
-              ),
-            ),
-            padding: EdgeInsets.only(top: 10),
-          ),
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: showStatistics(widget.status),
-          ),
-        ],
+      appBar: AppBar(
+        title: Text(showTitle()),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(10.0),
+        child: showStatistics(widget.status),
       ),
     );
+  }
+
+  String showTitle() {
+    switch (widget.status) {
+      case SmokingStatisticsStatus.DEFAULT:
+        return "All smoked cigarettes";
+        break;
+      case SmokingStatisticsStatus.TODAY:
+        return "Sorted by date: Today";
+        break;
+      case SmokingStatisticsStatus.YESTERDAY:
+        return "Sorted by date: Yesterday";
+        break;
+      case SmokingStatisticsStatus.LAST_WEEK:
+        return "Sorted by date: Last Week";
+        break;
+      case SmokingStatisticsStatus.LAST_MONTH:
+        return "Sorted by date: Last Month";
+        break;
+      case SmokingStatisticsStatus.SMOKING_CONTEXT:
+        return "Sorted by context: " +
+            EnumToString.convertToString(routeData, camelCase: true);
+        break;
+      case SmokingStatisticsStatus.SMOKING_REASON:
+        return "Sorted by reason: " +
+            EnumToString.convertToString(routeData, camelCase: true);
+        break;
+    }
   }
 
   Widget showStatistics(SmokingStatisticsStatus status) {
@@ -88,86 +106,18 @@ class _SmokingStatisticsWidgetState extends State<SmokingStatisticsWidget> {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
         } else {
-          return Table(
-            border: TableBorder.all(
-              color: Colors.black,
-              width: 1.0,
-            ),
-            children: populateTable(snapshot),
+          // TODO implement scenario where there are no cigarettes for selected cigarette detail
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return CigaretteDetailsWidget(
+                cigarette: snapshot.data[index],
+              );
+            },
+            itemCount: (snapshot.data as List).length,
           );
         }
       },
     );
-  }
-
-  TableRow titleRow() {
-    return TableRow(
-      children: [
-        Container(
-          child: Text(
-            "time of smoke",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Container(
-          child: Text(
-            "smoking context",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Container(
-          child: Text(
-            "reason to smoke",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Container(
-          child: Text(
-            "id",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  List<TableRow> populateTable(AsyncSnapshot snapshot) {
-    Jiffy jiffy = new Jiffy(DateTime.now(), "yyyy-MM-dd");
-    var list = List<TableRow>();
-    list.add(titleRow());
-    (snapshot.data as List<Cigarette>).forEach((element) {
-      list.add(
-        new TableRow(
-          children: [
-            Text(jiffy.from(element.timeOfSmoke)),
-            Text(
-              EnumToString.convertToString(
-                    element.smokingContext,
-                    camelCase: true,
-                  ) ??
-                  "",
-            ),
-            Text(
-              EnumToString.convertToString(
-                    element.reasonToSmoke,
-                    camelCase: true,
-                  ) ??
-                  "",
-            ),
-            Text(element.id.toString())
-          ],
-        ),
-      );
-    });
-    return list;
   }
 
   @override

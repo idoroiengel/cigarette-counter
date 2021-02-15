@@ -12,24 +12,25 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 part 'database.g.dart';
 
 @Database(version: 1, entities: [Cigarette])
-@TypeConverters([DateTimeConverter, SmokingReasonConverter, SmokingContextConverter])
+@TypeConverters(
+    [DateTimeConverter, SmokingReasonConverter, SmokingContextConverter])
 abstract class AppDatabase extends FloorDatabase {
   CigaretteDao get _cigaretteDao;
 
   void initWithMockData() {
     var jiffy = new Jiffy();
     var cigarette1 = new Cigarette(
-        timeOfSmoke: jiffy.startOf(Units.DAY),
+        timeOfSmoke: jiffy.startOf(Units.SECOND),
         chainSmokingNum: 1,
         smokingContext: SmokingContext.busStop,
         reasonToSmoke: SmokingReason.bathroom);
     var cigarette2 = new Cigarette(
-        timeOfSmoke: jiffy.startOf(Units.DAY),
+        timeOfSmoke: jiffy.startOf(Units.HOUR),
         chainSmokingNum: 1,
         smokingContext: SmokingContext.friends,
         reasonToSmoke: SmokingReason.boring);
     var cigarette3 = new Cigarette(
-        timeOfSmoke: jiffy.startOf(Units.DAY),
+        timeOfSmoke: jiffy.startOf(Units.MINUTE),
         chainSmokingNum: 1,
         smokingContext: SmokingContext.goingOut,
         reasonToSmoke: SmokingReason.food);
@@ -60,7 +61,8 @@ abstract class AppDatabase extends FloorDatabase {
     return _cigaretteDao.getAlSmokedCigarettesInContext(smokingContext);
   }
 
-  Future<List<Cigarette>> getAllSmokedCigarettesByReason(SmokingReason smokingReason){
+  Future<List<Cigarette>> getAllSmokedCigarettesByReason(
+      SmokingReason smokingReason) {
     return _cigaretteDao.getAllSmokedCigarettesByReason(smokingReason);
   }
 }

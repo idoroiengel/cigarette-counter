@@ -1,5 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/routes.dart';
@@ -17,13 +18,11 @@ class SmokingChoicesWidget extends StatefulWidget {
 class _SmokingChoicesWidgetState extends State<SmokingChoicesWidget> {
   SmokingChoicesViewModelImpl _smokingChoicesViewModelImpl;
 
-  // var routeData;
-
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
-      color: Color(AppColors.fireEngineRedPaletteColor),
+      color: Color(AppColors.celadonBluePaletteColor),
       child: StreamBuilder(
         stream: determineStreamType(),
         builder: (context, snapshot) {
@@ -37,13 +36,12 @@ class _SmokingChoicesWidgetState extends State<SmokingChoicesWidget> {
                 padding: const EdgeInsets.all(12.0),
                 child: RaisedButton(
                   color: Color(AppColors.isabellinePaletteColor),
-                  // TODO implement with SmokingContext route, and show statistics according to choice
                   onPressed: () => buildPushNamed(context, index),
                   child: Text(
                     EnumToString.convertToString(snapshot.data[index],
                         camelCase: true),
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: ScreenUtil().setSp(40),
                       color: Color(AppColors.fireEngineRedPaletteColor),
                     ),
                   ),

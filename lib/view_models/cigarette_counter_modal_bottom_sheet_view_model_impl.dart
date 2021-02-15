@@ -7,7 +7,6 @@ import 'package:my_cigarette_counter/view_models/main_view_model.dart';
 class CigaretteCounterModalBottomSheetViewModelImpl
     implements CigaretteCounterModalBottomSheetViewModel {
   @override
-  // TODO: implement outputRecentCigarettes
   Stream<List<Cigarette>> get outputRecentCigarettes =>
       MainViewModel.database.getAllSmokedCigarettes().asStream().take(4);
 }
