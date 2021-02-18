@@ -5,33 +5,35 @@ import 'package:jiffy/jiffy.dart';
 import 'package:my_cigarette_counter/dao/cigarette_dao.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/type_converters/date_time_converter.dart';
+import 'package:my_cigarette_counter/type_converters/smoking_context_converter.dart';
+import 'package:my_cigarette_counter/type_converters/smoking_reason_converter.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 part 'database.g.dart';
 
 @Database(version: 1, entities: [Cigarette])
-@TypeConverters([DateTimeConverter])
+@TypeConverters(
+    [DateTimeConverter, SmokingReasonConverter, SmokingContextConverter])
 abstract class AppDatabase extends FloorDatabase {
   CigaretteDao get _cigaretteDao;
 
   void initWithMockData() {
     var jiffy = new Jiffy();
     var cigarette1 = new Cigarette(
-        timeOfSmoke: jiffy.startOf(Units.DAY),
+        timeOfSmoke: jiffy.startOf(Units.SECOND),
         chainSmokingNum: 1,
-        smokingContext: "smoking context",
-        reasonToSmoke: "no reason at all");
+        smokingContext: SmokingContext.busStop,
+        reasonToSmoke: SmokingReason.bathroom);
     var cigarette2 = new Cigarette(
-        timeOfSmoke: jiffy.startOf(Units.DAY),
+        timeOfSmoke: jiffy.startOf(Units.HOUR),
         chainSmokingNum: 1,
-        smokingContext: "smoking context",
-        reasonToSmoke: "reason to smoke");
+        smokingContext: SmokingContext.friends,
+        reasonToSmoke: SmokingReason.boring);
     var cigarette3 = new Cigarette(
-        timeOfSmoke: jiffy.startOf(Units.DAY),
+        timeOfSmoke: jiffy.startOf(Units.MINUTE),
         chainSmokingNum: 1,
-        smokingContext: "I don't know",
-        reasonToSmoke: "reason to smoke"
-    );
+        smokingContext: SmokingContext.goingOut,
+        reasonToSmoke: SmokingReason.food);
     addCigarette(cigarette1);
     addCigarette(cigarette2);
     addCigarette(cigarette3);
@@ -55,7 +57,12 @@ abstract class AppDatabase extends FloorDatabase {
   }
 
   Future<List<Cigarette>> getAllSmokedCigarettesInContext(
-      String smokingContext) {
+      SmokingContext smokingContext) {
     return _cigaretteDao.getAlSmokedCigarettesInContext(smokingContext);
+  }
+
+  Future<List<Cigarette>> getAllSmokedCigarettesByReason(
+      SmokingReason smokingReason) {
+    return _cigaretteDao.getAllSmokedCigarettesByReason(smokingReason);
   }
 }

@@ -1,9 +1,11 @@
 import 'package:floor/floor.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
 import 'package:my_cigarette_counter/type_converters/date_time_converter.dart';
+import 'package:my_cigarette_counter/type_converters/smoking_context_converter.dart';
+import 'package:my_cigarette_counter/type_converters/smoking_reason_converter.dart';
 
 @dao
-@TypeConverters([DateTimeConverter])
+@TypeConverters([DateTimeConverter, SmokingReasonConverter, SmokingContextConverter])
 abstract class CigaretteDao {
   @insert
   Future<int> insertCigarette(Cigarette cigarette);
@@ -20,5 +22,8 @@ abstract class CigaretteDao {
       DateTime startDate, DateTime endDate);
 
   @Query("SELECT * FROM Cigarette WHERE smokingContext = :smokingContext")
-  Future<List<Cigarette>> getAlSmokedCigarettesInContext(String smokingContext);
+  Future<List<Cigarette>> getAlSmokedCigarettesInContext(SmokingContext smokingContext);
+
+  @Query("SELECT * FROM Cigarette WHERE reasonToSmoke = :smokingReason")
+  Future<List<Cigarette>> getAllSmokedCigarettesByReason(SmokingReason smokingReason);
 }
