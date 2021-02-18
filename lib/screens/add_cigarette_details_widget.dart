@@ -5,22 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:my_cigarette_counter/colors.dart';
 import 'package:my_cigarette_counter/entity/cigarette.dart';
-import 'package:my_cigarette_counter/view_models/cigarette_details_view_model_impl.dart';
+import 'package:my_cigarette_counter/view_models/add_cigarette_details_view_model_impl.dart';
 
-class CigaretteDetailsWidget extends StatefulWidget {
+class AddCigaretteDetailsWidget extends StatefulWidget {
   @override
-  _CigaretteDetailsWidgetState createState() => _CigaretteDetailsWidgetState();
+  _AddCigaretteDetailsWidgetState createState() => _AddCigaretteDetailsWidgetState();
 }
 
-class _CigaretteDetailsWidgetState extends State<CigaretteDetailsWidget> {
-  CigaretteDetailsViewModelImpl _cigaretteDetailsViewModelImpl;
+class _AddCigaretteDetailsWidgetState extends State<AddCigaretteDetailsWidget> {
+  AddCigaretteDetailsViewModelImpl _addCigaretteDetailsViewModelImpl;
   var smokingReason;
   var smokingContext;
 
   @override
   void initState() {
     super.initState();
-    _cigaretteDetailsViewModelImpl = CigaretteDetailsViewModelImpl();
+    _addCigaretteDetailsViewModelImpl = AddCigaretteDetailsViewModelImpl();
     smokingContext = SmokingContext.values.first;
     smokingReason = SmokingReason.values.first;
   }
@@ -109,7 +109,7 @@ class _CigaretteDetailsWidgetState extends State<CigaretteDetailsWidget> {
             alignment: Alignment.bottomCenter,
             child: RaisedButton(
               onPressed: () {
-                _cigaretteDetailsViewModelImpl
+                _addCigaretteDetailsViewModelImpl
                     .inputAddCigarette(
                       Cigarette(
                         smokingContext: this.smokingContext,

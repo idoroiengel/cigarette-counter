@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_cigarette_counter/screens/add_cigarette_details_widget.dart';
 import 'package:my_cigarette_counter/screens/cigarette_counter_widget.dart';
-import 'package:my_cigarette_counter/screens/cigarette_details_widget.dart';
 import 'package:my_cigarette_counter/screens/smoking_choices_widget.dart';
 import 'package:my_cigarette_counter/screens/smoking_statistics_widget.dart';
 
@@ -30,7 +30,7 @@ class Routes {
       Routes.smoking_reason_statistics: (context) => SmokingStatisticsWidget(
             status: SmokingStatisticsStatus.SMOKING_REASON,
           ),
-      Routes.add_cigarette_details: (context) => CigaretteDetailsWidget(),
+      Routes.add_cigarette_details: (context) => AddCigaretteDetailsWidget(),
       Routes.smoking_context_choices: (context) => SmokingChoicesWidget(
             routeArguments: "smokingContext",
           ),
