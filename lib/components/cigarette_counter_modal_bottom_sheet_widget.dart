@@ -64,10 +64,9 @@ class _CigaretteCounterModalBottomSheetWidgetState
               List<Cigarette> items = snapshot.data;
               if (snapshot.hasData && !snapshot.hasError) {
                 return ListView.builder(
-                  itemCount: recent_cigarettes_number,
+                  itemCount: determineItemCount(items.length),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    // TODO implement a RecentCigaretteWidget and show recent cigarettes in that widget
                     return CigaretteDetailsWidget(
                       cigarette: items[index],
                     );
@@ -116,5 +115,12 @@ class _CigaretteCounterModalBottomSheetWidgetState
         ],
       ),
     );
+  }
+
+  int determineItemCount(int itemsLength) {
+    print("items length: $itemsLength");
+    return itemsLength < recent_cigarettes_number
+        ? itemsLength
+        : recent_cigarettes_number;
   }
 }

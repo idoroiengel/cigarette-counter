@@ -9,7 +9,8 @@ import 'package:my_cigarette_counter/view_models/add_cigarette_details_view_mode
 
 class AddCigaretteDetailsWidget extends StatefulWidget {
   @override
-  _AddCigaretteDetailsWidgetState createState() => _AddCigaretteDetailsWidgetState();
+  _AddCigaretteDetailsWidgetState createState() =>
+      _AddCigaretteDetailsWidgetState();
 }
 
 class _AddCigaretteDetailsWidgetState extends State<AddCigaretteDetailsWidget> {
@@ -84,8 +85,7 @@ class _AddCigaretteDetailsWidgetState extends State<AddCigaretteDetailsWidget> {
                   child: Container(
                     color: Color(AppColors.isabellinePaletteColor),
                     child: StreamBuilder(
-                      initialData: Jiffy().format('MMMM do yyyy, h:mm:ss a'),
-                        // TODO add initial data to avoid having null value at first
+                        initialData: Jiffy().format('MMMM do yyyy, h:mm:ss a'),
                         stream: Stream.periodic(Duration(seconds: 5), (i) {
                           return Jiffy().format('MMMM do yyyy, h:mm:ss a');
                         }),
