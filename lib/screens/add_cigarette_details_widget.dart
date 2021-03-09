@@ -84,6 +84,7 @@ class _AddCigaretteDetailsWidgetState extends State<AddCigaretteDetailsWidget> {
                   child: Container(
                     color: Color(AppColors.isabellinePaletteColor),
                     child: StreamBuilder(
+                      initialData: Jiffy().format('MMMM do yyyy, h:mm:ss a'),
                         // TODO add initial data to avoid having null value at first
                         stream: Stream.periodic(Duration(seconds: 5), (i) {
                           return Jiffy().format('MMMM do yyyy, h:mm:ss a');
